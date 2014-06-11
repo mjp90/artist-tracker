@@ -15,13 +15,17 @@ var initMasonry = function() {
      // isFitWidth: true,
     transitionDuration: 0
     // isAnimated: !Modernizr.csstransitions
-  }).imagesLoaded(function() {
-   $('#content').masonry('reload');
   });
+  // .imagesLoaded(function() {
+  //  $('#artist_blocks_container').masonry('reload');
+  // });
 }
 
 var showArtistInfo = function() {
-  $("#artist_blocks_container img").hover(function() {
-    
+  $(".artist_block").hover(function() {
+    // debugger;
+    $(this).find(".low").addClass('show_icons');
+  }, function() {
+    $(this).find(".low").removeClass('show_icons');
   });
 } 
