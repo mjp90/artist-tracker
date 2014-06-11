@@ -1,0 +1,35 @@
+# To Grab Any Public User's Twitter Page
+1. Initialize Twitter Client
+2. artist = Client.user("UserName")
+  3. Attributes I need => {
+    :name => artist.name,
+    :description_tagline_under_profile_pic => artist.description,
+    :profile_pic_url => artist.profile_background_image_url,
+    :location => artist.loctaion,
+    :join_date => artist.,
+    :language_page_is_in => artist.lang,
+    :statuses_count => artist.statuses_count,
+    :list_of_tweets => client.user_timeline("Artist Name", {}),
+    :list_of_tweets.each do { |tweet| (Do logic below)},
+
+    :status => artist.status => Twitter::Tweet => {
+      :text => status.text ('RT' is for Retweeted, @username: is user retweeted from, Rest is body),
+      :is_retweet => status.retweet?,
+      :retweeted_count => status.retweet_count,
+      :favorited_count => status.favorite_count (CAN ONLY GET TO WORK IF NOT A RETWEET),
+
+    }
+
+  }
+
+
+
+
+
+
+
+
+4. Current User Actions With Own Account => {
+  :tweet_to_artist
+  :Follow_artist
+}
