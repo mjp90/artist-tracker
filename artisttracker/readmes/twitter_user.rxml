@@ -1,5 +1,6 @@
 # To Grab Any Public User's Twitter Page
 1. Initialize Twitter Client
+  
 2. artist = Client.user("UserName")
   3. Attributes I need => {
     :name => artist.name,
