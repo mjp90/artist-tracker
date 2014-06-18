@@ -1,0 +1,141 @@
+<!-- I can use reload, isFitWidth, Unbind and rebind when needed -->
+
+<div id="top_nav_bar">
+  <div id="circle_icon">
+
+  </div>
+  <div class="search_bar">
+      <div class="search_label">Search</div>
+      <!-- <div class="search_box"> -->
+        <%= text_field_tag 'search', nil, :class => "search_box" %>
+      <!-- </div> -->
+  </div>
+  <div><%= link_to 'Logout', destroy_user_session_path, :method => 'DELETE' %></div>
+</div>
+
+<div id="dashboard_background_image">
+  <div id="artist_list_container">
+    <div id="dashboard_h1">Artists</div>
+    <div>
+      <%= link_to 'Create Artist!', dashboard_create_temp_artist_path %>
+      <%= link_to @artists.first.name, artist_path(@artists.first) %>
+    </div>
+    <div id="artist_blocks_container">
+    <div class="artist_block t1">
+      <!-- <a href="#" class="anc"><%#= image_tag 'empire_square.jpg' %></a> -->
+      <!-- <span class="aa">HFJGKHJVGKLB</span> -->
+      <div class="upp"><%#= image_tag 'empire_square.jpg' %><!-- Upper --></div>
+      <!-- <div class="upp">Upper</div> -->
+      <div class="low">
+        <table class="social_icons">
+          <thead></thead>
+          <tbody>
+            <tr>
+              <td>Twitter</td>
+              <td>Facebook</td>
+              <td>Soundcloud</td>
+              <td>SongKick</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="artist_block w1">
+      <div class="upp"><%#= image_tag 'skrillex_rect.png' %></div>
+      <div class="low">
+        <table class="social_icons">
+          <thead></thead>
+          <tbody>
+            <tr>
+              <td>Twitter</td>
+              <td>Facebook</td>
+              <td>Soundcloud</td>
+              <td>SongKick</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="artist_block sq1">
+      <div class="upp"><%#= image_tag 'zedd_square.jpg' %></div>
+      <div class="low">
+        <table class="social_icons">
+          <thead></thead>
+          <tbody>
+            <tr>
+              <td>Twitter</td>
+              <td>Facebook</td>
+              <td>Soundcloud</td>
+              <td>SongKick</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="artist_block sq2">
+       <div class="upp"><%#= image_tag 'dillon_square.jpg' %></div>
+       <div class="low">
+        <table class="social_icons">
+          <thead></thead>
+          <tbody>
+            <tr>
+              <td>Twitter</td>
+              <td>Facebook</td>
+              <td>Soundcloud</td>
+              <td>SongKick</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="artist_block t2">
+      <div class="upp"><%#= image_tag 'hardwell_rect.jpg' %></div>
+      <div class="low">
+        <table class="social_icons">
+          <thead></thead>
+          <tbody>
+            <tr>
+              <td>Twitter</td>
+              <td>Facebook</td>
+              <td>Soundcloud</td>
+              <td>SongKick</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="artist_block w2">
+       <div class="upp"><%#= image_tag 'chuckie_rect.jpg' %></div>
+       <div class="low">
+        <table class="social_icons">
+          <thead></thead>
+          <tbody>
+            <tr>
+              <td>Twitter</td>
+              <td>Facebook</td>
+              <td>Soundcloud</td>
+              <td>SongKick</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="artist_block t1"></div>
+    <div class="artist_block w1"></div>
+    <div class="artist_block sq1"></div>
+
+    <div class="artist_block sq2"></div>
+    <div class="artist_block t2"></div>
+    <div class="artist_block w2"></div>
+
+
+
+      <!-- <div class="artist1"><%#= image_tag 'skrillex_rect.png' %></div>
+      <div class="artist2"><%#= image_tag 'dillon_square.jpg' %></div> -->
+    </div>
+  </div>
+</div>
+
+  

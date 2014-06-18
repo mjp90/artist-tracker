@@ -1,15 +1,22 @@
 Rails.application.routes.draw do
+  devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'dashboard#index'
+  root 'home#index'
 
   resources :artists do
     member do
       get 'show_twitter_feed'
     end
   end
+
+  get 'home/index' => 'home#index'
+
+  get 'dashboard/index' => 'dashboard#index'
+  get 'dashboard/show' => 'dashboard#show'
+  get 'dashboard/create_temp_artist' => 'dashboard#create_temp_artist'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
