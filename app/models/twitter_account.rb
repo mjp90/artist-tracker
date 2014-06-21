@@ -17,29 +17,29 @@ class TwitterAccount < ActiveRecord::Base
 
   def self.create_for_artist(artist)
     # fetched_account      = TwitterApi::Methods.get_account_for_username(artist.name)
-    fetched_account_info = ApiParamsExtractor::Twitter.extract_account_info(fetched_account)
-    twitter_account      = create(fetched_account_info.merge(:artist_id => artist.id)
+    # fetched_account_info = ApiParamsExtractor::Twitter.extract_account_info(fetched_account)
+    # twitter_account      = create(fetched_account_info.merge(:artist_id => artist.id)
 
     # found_tweets = TwitterApi::Methods.tweets_for_account(twitter_account)
-    found_tweets.each do |tweet|
-      tweet_info = ApiParamsExtractor::Twitter.extract_tweet_info(tweet)
-      Tweet.create(tweet_info.merge(:twitter_account_id => twitter_account.id))
-    end
+    # found_tweets.each do |tweet|
+    #   tweet_info = ApiParamsExtractor::Twitter.extract_tweet_info(tweet)
+    #   Tweet.create(tweet_info.merge(:twitter_account_id => twitter_account.id))
+    # end
   end
 
   def update_info
     # fetched_account      = TwitterApi::Methods.get_account_for_username(screen_name)
-    fetched_account_info = ApiParamsExtractor::Twitter.extract_account_info(fetched_account)
-    # if nothing has changed for the account (Same Tweets Count Or Something. Maybe Updated at) don't need to update
-    self.update_attributes(fetched_account_info)
+    # fetched_account_info = ApiParamsExtractor::Twitter.extract_account_info(fetched_account)
+    # # if nothing has changed for the account (Same Tweets Count Or Something. Maybe Updated at) don't need to update
+    # self.update_attributes(fetched_account_info)
 
-    # Wipe out existing?
-    # Only grab new ones? Don't know how tweets are updated
+    # # Wipe out existing?
+    # # Only grab new ones? Don't know how tweets are updated
     # found_tweets = TwitterApi::Methods.tweets_for_account(self, self.tweets.min_twitter_id)
-    found_tweets.reject!{|tweet| Tweet.where(:twitter_id => tweet.id)}      
-    found_tweets.each do |tweet|
-      tweet_info = ApiParamsExtractor::Twitter.extract_tweet_info(tweet)
-      Tweet.create(tweet_info.merge(:twitter_account_id => twitter_account.id))
-    end
+    # found_tweets.reject!{|tweet| Tweet.where(:twitter_id => tweet.id)}      
+    # found_tweets.each do |tweet|
+    #   tweet_info = ApiParamsExtractor::Twitter.extract_tweet_info(tweet)
+    #   Tweet.create(tweet_info.merge(:twitter_account_id => self.id))
+    # end
   end
 end
