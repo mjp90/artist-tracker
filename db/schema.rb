@@ -17,15 +17,21 @@ ActiveRecord::Schema.define(version: 20140618114137) do
   enable_extension "plpgsql"
 
   create_table "artists", force: true do |t|
-    t.string   "name",        null: false
+    t.text     "twitter_url"
+    t.text     "facebook_url"
+    t.text     "soundcloud_url"
+    t.text     "songkick_url"
+    t.string   "name",           null: false
+    t.string   "music_genre",    null: false
     t.string   "country"
     t.string   "city"
     t.string   "state"
-    t.string   "music_genre", null: false
     t.integer  "age"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "artists", ["name", "music_genre"], name: "index_artists_on_name_and_music_genre", unique: true, using: :btree
 
   create_table "twitter_accounts", force: true do |t|
     t.integer  "user_id"

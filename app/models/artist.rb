@@ -4,6 +4,9 @@ class Artist < ActiveRecord::Base
 
   # include TwitterApi
 
+  validates :name, :music_genre, :presence => true
+  validates :name, :uniqueness => {:scope => :music_genre}
+
   has_one :twitter_account
   # has_one :facebook_feed
   # has_one :soundcloud_feed

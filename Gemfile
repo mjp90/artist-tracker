@@ -53,5 +53,7 @@ gem 'rails_12factor', group: :production
 
 group :development do
   gem 'twitter', '~> 5.9.0'
+  gem 'pry'
+  gem 'pry-doc'
 end
 

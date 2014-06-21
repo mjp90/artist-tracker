@@ -32,16 +32,81 @@
   font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
   font-size: 30px;
   color: #3e3e3e;
-  border-bottom: 1px solid #a2a2a2;
-  margin: 0 125px;
+  /*border-bottom: 1px solid #a2a2a2;*/
+  /*margin: 0 125px;*/
   text-align: center;
-  margin-top: 50px;
+  display: inline-block;
+  /*margin-top: 50px;*/
+  margin-left: 450px;
+}
+
+#admin_flash_messages {
+  margin-left: 125px;
+  /*margin-top: 20px;*/
+  width: 700px;
+}
+
+#admin_flash_messages p {
+  color: #FF4747;
+  font-size: 28px;
+  margin-bottom: 0px;
+  margin-top: 10px;
+}
+
+#admin_error_message {
+  padding-top: 20px;
+  margin-left: 25px;
+  color: #CE5353;
+  font-size: 14px;
+}
+
+#admin_success_message {
+  margin-top: 10px;
+  padding: 20px 0;
+  font-size: 28px;
+  color: #84E08B;
+  background-color: rgba(212, 240, 213, 0.73);
+}
+
+/*#admin_success_message:hover {
+  -webkit-transition-duration: 3s;
+  -webkit-transition-delay: 3s;
+  opacity: 0;
+}*/
+
+.flash_animate_hide {
+  -webkit-transition-duration: 1s;
+  -webkit-transition-delay: 3s;
+  opacity: 0;
+
+  /*-webkit-animation-name: hide_flash_message;
+  -webkit-animation-duration: 2s;
+  -webkit-animation-delay: 3s;*/
+  /*-webkit-animation-iteration-count: 1;*/
+  /*-webkit-animation-play-state: running;*/
+}
+
+
+
+@-webkit-keyframes hide_flash_message {
+    0% {}
+    25% {}
+    50% {}
+    75% {}
+    99% {opacity: 0;}
+    100% {display: none;}
+}
+
+
+.admin_move_container_up {
+  -webkit-transform:translateY(-80px);
+  -webkit-transition-duration: .8s;
 }
 
 .admin_section {
-  width: 800px;
+  width: 700px;
   height: 550px;
-  margin-top: 50px;
+  margin-top: 10px;
   margin-left: 125px;
   border: 1px solid #eeeeee;
   background-color: #FAFAFA;
@@ -54,34 +119,51 @@
   margin-top: 30px;
 }
 
-#admin_search_for_artist_tb {
-  width: 150px;
+.admin_artist_tf {
+  width: 300px;
   /*height: 30px;*/
   margin-left: 30px;
-  margin-top: 20px;
+  margin-top: 10px;
   padding: 10px 10px;
+  text-align: center;
+  color: #5C5C5C;
 }
 
 #admin_get_info_submit_bt {
-  width: 80px;
-  height: 40px;
+  width: 220px;
+  height: 60px;
   background-color: #74ACFF;
   border: 1px solid #A5B8CF;
   color: #FFFFFF;
   margin-left: 30px;
-  /*padding: 10px 15px;*/
-}
-
-#admin_artist_find_results {
   margin-top: 50px;
-  /*margin-left: 30px;*/
+  font-size: 20px;
 }
 
-.admin_artist_result_lb {
-  margin-left: 30px;
-  width: 300px;
+#new_artist_table {
+  width: 100%;
 }
 
+#new_artist_table td {
+  font-size: 22px;
+  color: #5e5e5e;
+}
+
+#new_artist_table td label {
+  margin-left: 40px;
+  margin-top: 50px;
+}
+
+#admin_reset_bt {
+  font-size: 22px;
+  /*margin-left: 140px;*/
+  color: #FFFFFF;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 50px;
+  padding: 10px 20px;
+  background-color: #FF5E5E;
+}
 
 
 

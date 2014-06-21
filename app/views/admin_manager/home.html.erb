@@ -1,28 +1,57 @@
 <div id="admin_manager_body">
   <div id="admin_manager_top_nav">
     <%= link_to (fa_icon 'home', :id => 'home_back_icon'), root_path %>
+     <div id="admin_header">Admin Panel</div>
   </div>
-  <div id="admin_header">Admin Panel</div>
+ <!--  <div id="admin_header">Admin Panel</div> -->
+
+  <div id="admin_flash_messages">
+    <% if flash[:error] %>
+      <p>ERROR</p>
+      <div id="admin_error_message"><%= flash[:error].join('<br>').html_safe %></div>
+    <% elsif flash[:notice] %>
+      <div id="admin_success_message"><%= flash[:notice] %></div>
+    <% end %>
+  </div>
+  
+
   <div class="admin_section">
-    <div class="admin_section_header">Artist</div>
-    <%= form_tag '/find_artist_info' do %>
-      <%= text_field_tag 'artist_name', '', :id => "admin_search_for_artist_tb" %>
-      <%= submit_tag 'Get Info', :id => 'admin_get_info_submit_bt' %>
+    <%= form_tag admin_manager_create_artist_path, :method => 'post' do %>
+      <%= fields_for @artist do |artist| %>
+        <table id="new_artist_table">
+          <thead></thead>
+          <tbody>
+            <tr>
+              <td><%= label_tag 'artist', 'Artist' %></td>
+              <td><%= artist.text_field 'name', :placeholder => "Name Given to Artist at Birth", :class => "admin_artist_tf" %></td>
+            </tr>
+            <tr>
+              <td><%= label_tag 'music_genre', 'Music Genre' %></td>
+              <td><%= artist.text_field 'music_genre', :value => 'EDM', :placeholder => "EDM EDM EDM", :class => "admin_artist_tf" %></td>
+            </tr>
+            <tr>
+              <td><%= label_tag 'twitter_url', 'Twitter URL', nil %></td>
+              <td><%= artist.text_field 'twitter_url', :placeholder => "The Place of Tweet", :class => "admin_artist_tf" %></td>
+            </tr>
+            <tr>
+              <td><%= label_tag 'facebook_url', 'Facebook URL', nil %></td>
+              <td><%= artist.text_field 'facebook_url', :placeholder => "Face on a Book", :class => "admin_artist_tf" %></td>
+            </tr>
+            <tr>
+              <td><%= label_tag 'soundcloud_url', 'Soundcloud URL', nil %></td>
+              <td><%= artist.text_field 'soundcloud_url', :placeholder => "Chunes", :class => "admin_artist_tf"%></td>
+            </tr>
+            <tr>
+              <td><%= label_tag 'songkick_url', 'Songkick URL', nil %></td>
+              <td><%= artist.text_field 'songkick_url', :placeholder => "I'm gonna Kick your Song", :class => "admin_artist_tf" %></td>
+            </tr>
+            <tr>
+              <td><%= submit_tag 'Create Artist', :id => 'admin_get_info_submit_bt' %></td>
+              <td><%= link_to 'Reset', '', :id => 'admin_reset_bt' %></td>
+            </tr>
+          </tbody>
+        <% end %>
+      </table>
     <% end %>
-    <div id="admin_artist_find_results">
-      <%= form_tag '/create_artist', :method => "post" do %>
-        <%= label_tag 'Country', nil, :class => 'admin_artist_result_lb' %>
-        <%= text_field_tag 'country', '', :id => "admin_search_for_artist_tb", :style => "margin-left: 59px;" %> <br>
-        <%= label_tag 'City', nil, :class => 'admin_artist_result_lb' %> 
-        <%= text_field_tag 'city', '', :id => "admin_search_for_artist_tb", :style => "margin-left: 84px;" %> <br>
-        <%= label_tag 'State', nil, :class => 'admin_artist_result_lb' %> 
-        <%= text_field_tag 'state', '', :id => "admin_search_for_artist_tb", :style => "margin-left: 79px;" %> <br>
-        <%= label_tag 'Music Genre', nil, :class => 'admin_artist_result_lb' %> 
-        <%= text_field_tag 'music_genre', '', :id => "admin_search_for_artist_tb" %> <br>
-        <%= label_tag 'Age', nil, :class => 'admin_artist_result_lb' %> 
-        <%= text_field_tag 'age', '', :id => "admin_search_for_artist_tb", :style => "margin-left: 84px;" %> <br><br>
-        <%= submit_tag 'Add Artist', :id => 'admin_get_info_submit_bt', :style => "margin-left: 120px; width: 100px;" %>
-    <% end %>
-    </div>
   </div>
 </div>
