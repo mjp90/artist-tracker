@@ -1,7 +1,12 @@
 class CreateArtistsTable < ActiveRecord::Migration
   def change
     create_table :artists do |t|
-      # t.integer :artist_list_id, :null => false
+      # Extras If Breaks
+      t.text    :twitter_account_url
+      t.text    :facebook_account_url
+      t.text    :soundcloud_account_url
+      t.text    :songkick_account_url
+
       t.string  :name, :null => false
       t.string  :country
       t.string  :city

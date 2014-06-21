@@ -1,9 +1,7 @@
 <!-- I can use reload, isFitWidth, Unbind and rebind when needed -->
 
 <div id="top_nav_bar">
-  <div id="circle_icon">
-
-  </div>
+  <div id="circle_icon"></div> 
   <div class="search_bar">
       <div class="search_label">Search</div>
       <!-- <div class="search_box"> -->
@@ -18,7 +16,10 @@
     <div id="dashboard_h1">Artists</div>
     <div>
       <%= link_to 'Create Artist!', dashboard_create_temp_artist_path %>
-      <%= link_to @artists.first.name, artist_path(@artists.first) %>
+      <% if @artists.any? %>
+        <%= link_to @artists.first.name, artist_path(@artists.first)%>
+      <% end %>
+      <h3><%= link_to 'Link Twitter Account', user_omniauth_authorize_path(:twitter) %></h3>
     </div>
     <div id="artist_blocks_container">
     <div class="artist_block t1">

@@ -12,13 +12,29 @@ class Artist < ActiveRecord::Base
 
   def self.update_next_artist_feed
     artist = Artist.order(:updated_at).first
-    fetched_twitter_account = get_account_for_username(artist.name)
-    current_twitter_account = artist.twitter_account
-    if current_twitter_account.exists? 
-      current_twitter_account.update_info(fetched_twitter_account)
-    else 
-      TwitterAccount.create_new_for_artist(fetched_twitter_account, artist)
-    end
+
+    artist.twitter_account.update_info
+    # fetched_twitter_account = get_account_for_username(artist.name)
+    # current_twitter_account = artist.twitter_account
+    # if current_twitter_account.exists? 
+    #   current_twitter_account.update_info(fetched_twitter_account)
+    # else 
+    #   TwitterAccount.create_for_artist(fetched_twitter_account, artist)
+    # end
   end
 
+  def self.add_new(info)
+    artist = create(info)
+
+    TwitterAccount.create_for_artist(artist)
+
+    # artist.create_twitter_account
+    # artist.create_facebook_account
+    # artist.create_soundcloud_account
+    # artist.create_songkick_account
+  end
+
+  # def create_twitter_account
+  #   TwitterAccount.
+  # end
 end

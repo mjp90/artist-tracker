@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, :controllers => {:omniauth_callbacks => 'omniauth_callbacks'}
+  # match "/auth/:provider/callback" => "sessions#create"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -17,6 +18,14 @@ Rails.application.routes.draw do
   get 'dashboard/index' => 'dashboard#index'
   get 'dashboard/show' => 'dashboard#show'
   get 'dashboard/create_temp_artist' => 'dashboard#create_temp_artist'
+
+
+  # Non-Resourceful Routes
+  get 'admin_manager/index' => 'admin_manager#home'
+  get 'admin_manager/home' => 'admin_manager#home'
+  get 'admin_manager/find_artist_info' => 'admin_manager#find_artist_info'
+
+  post 'admin_manager/create_artist' => 'admin_manager#create_artist'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

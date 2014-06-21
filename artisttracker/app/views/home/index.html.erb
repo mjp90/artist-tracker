@@ -1,2 +1,15 @@
+<div id="top_nav_bar">
+  <%= link_to '', admin_manager_home_path, :id => 'circle_icon' %>
+  <!-- <div id="circle_icon"></div> --> 
+  <div class="search_bar">
+      <div class="search_label">Search</div>
+      <!-- <div class="search_box"> -->
+        <%= text_field_tag 'search', nil, :class => "search_box" %>
+      <!-- </div> -->
+  </div>
+</div>
+
 <h3><%= link_to 'Signup!', new_user_registration_path %></h3>
 <h3><%= link_to 'Login!', new_user_session_path %></h3>
+<br>
+<h3><%= link_to 'Link Twitter Account', user_omniauth_authorize_path(:twitter) %></h3>
