@@ -1,0 +1,28 @@
+<div id="admin_manager_body">
+  <div id="admin_manager_top_nav">
+    <%= link_to (fa_icon 'home', :id => 'home_back_icon'), root_path %>
+  </div>
+  <div id="admin_header">Admin Panel</div>
+  <div class="admin_section">
+    <div class="admin_section_header">Artist</div>
+    <%= form_tag '/find_artist_info' do %>
+      <%= text_field_tag 'artist_name', '', :id => "admin_search_for_artist_tb" %>
+      <%= submit_tag 'Get Info', :id => 'admin_get_info_submit_bt' %>
+    <% end %>
+    <div id="admin_artist_find_results">
+      <%= form_tag '/create_artist', :method => "post" do %>
+        <%= label_tag 'Country', nil, :class => 'admin_artist_result_lb' %>
+        <%= text_field_tag 'country', '', :id => "admin_search_for_artist_tb", :style => "margin-left: 59px;" %> <br>
+        <%= label_tag 'City', nil, :class => 'admin_artist_result_lb' %> 
+        <%= text_field_tag 'city', '', :id => "admin_search_for_artist_tb", :style => "margin-left: 84px;" %> <br>
+        <%= label_tag 'State', nil, :class => 'admin_artist_result_lb' %> 
+        <%= text_field_tag 'state', '', :id => "admin_search_for_artist_tb", :style => "margin-left: 79px;" %> <br>
+        <%= label_tag 'Music Genre', nil, :class => 'admin_artist_result_lb' %> 
+        <%= text_field_tag 'music_genre', '', :id => "admin_search_for_artist_tb" %> <br>
+        <%= label_tag 'Age', nil, :class => 'admin_artist_result_lb' %> 
+        <%= text_field_tag 'age', '', :id => "admin_search_for_artist_tb", :style => "margin-left: 84px;" %> <br><br>
+        <%= submit_tag 'Add Artist', :id => 'admin_get_info_submit_bt', :style => "margin-left: 120px; width: 100px;" %>
+    <% end %>
+    </div>
+  </div>
+</div>

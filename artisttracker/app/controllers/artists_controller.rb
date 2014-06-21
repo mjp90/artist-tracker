@@ -5,7 +5,7 @@ class ArtistsController < ApplicationController
   end
 
   def show
-    
+    @artist = current_user.artists.where(:id => params[:id]).take
   end
 
   def show_twitter_feed

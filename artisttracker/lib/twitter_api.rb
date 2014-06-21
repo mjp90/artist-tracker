@@ -11,14 +11,16 @@ module TwitterApi
     end
 
     # Returns a Twitter::User object
-    def self.get_account_for_username(username)
+    def get_account_for_username(username)
       client.user(username)
     end
 
-    def self.tweets_for_account(account, min_id=nil)
-      # options[:max_id] => min_id if min_id
-      options = {:count => 50}
-      client.user_timeline(account.id, options)
+    def tweets_for_account(account)
+      client.user_timeline("Artist Name", {})
+    end
+
+    def new_tweets_for_account(account)
+      
     end
   end
 
