@@ -22,6 +22,9 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 
 gem 'pg', '~> 0.17.1'
+
+gem 'rest-client', '~> 1.6.7'
+
 gem 'devise'
 gem 'omniauth-twitter'
 gem 'omniauth-facebook'
