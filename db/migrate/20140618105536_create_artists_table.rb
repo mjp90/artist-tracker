@@ -1,7 +1,6 @@
 class CreateArtistsTable < ActiveRecord::Migration
   def change
     create_table :artists do |t|
-      # Extras If Breaks
       t.text    :twitter_url
       t.text    :facebook_url
       t.text    :soundcloud_url

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140618114137) do
+ActiveRecord::Schema.define(version: 20140626074644) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,37 @@ ActiveRecord::Schema.define(version: 20140618114137) do
   end
 
   add_index "artists", ["name", "music_genre"], name: "index_artists_on_name_and_music_genre", unique: true, using: :btree
+
+  create_table "concerts", force: true do |t|
+    t.integer  "songkick_account_id", null: false
+    t.integer  "songkick_id",         null: false
+    t.integer  "age_restriction"
+    t.float    "lat"
+    t.float    "long"
+    t.text     "event_name",          null: false
+    t.text     "url",                 null: false
+    t.string   "city",                null: false
+    t.string   "state"
+    t.string   "country",             null: false
+    t.datetime "start_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "concerts", ["songkick_account_id"], name: "index_concerts_on_songkick_account_id", using: :btree
+
+  create_table "songkick_accounts", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "artist_id"
+    t.integer  "songkick_id",    null: false
+    t.integer  "total_concerts"
+    t.string   "display_name",   null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "songkick_accounts", ["artist_id"], name: "index_songkick_accounts_on_artist_id", unique: true, using: :btree
+  add_index "songkick_accounts", ["user_id"], name: "index_songkick_accounts_on_user_id", unique: true, using: :btree
 
   create_table "twitter_accounts", force: true do |t|
     t.integer  "user_id"

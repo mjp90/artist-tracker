@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   has_one :twitter_account
   # has_one :facebook_account
   # has_one :soundcloud_account
-  # has_one :songkick_account
+  has_one :songkick_account
 
   has_and_belongs_to_many :artists, :join_table => :users_artists
 

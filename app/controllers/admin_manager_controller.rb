@@ -21,6 +21,13 @@ class AdminManagerController < ApplicationController
     end
   end
 
+  def update_artist_songkick_accounts
+    Artist.update_all_songkick_accounts
+    
+    SongkickAccount.update_all_accounts
+    SongkickApi.get_upcoming_concerts_for_user(u
+  end
+
   private
 
   def artist_params

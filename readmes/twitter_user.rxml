@@ -3,13 +3,13 @@
   
 2. artist = Client.user("UserName")
   3. Attributes I need => {
-    :name => artist.name,
+    # :name => artist.name,
     :screen_name => artist.screen_name
-    :description_tagline_under_profile_pic => artist.description,
+    # :description_tagline_under_profile_pic => artist.description,
     :profile_pic_url => artist.profile_background_image_url,
     :location => artist.loctaion,
     :join_date => artist.created_at,
-    :language_page_is_in => artist.lang,
+    # :language_page_is_in => artist.lang,
     :statuses_count => artist.statuses_count,
     :list_of_tweets => client.user_timeline("Artist Name", {}),
     :list_of_tweets.each do { |tweet| (Do logic below)},
