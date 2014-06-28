@@ -8,7 +8,7 @@ TWITTER_API_SECRET = API_KEYS['twitter']['api_secret']
 
 
 #Souncloud API Keys
-SOUNDCLOUD_API_KEY = API_KEYS['souncloud']['api_key']
+SOUNDCLOUD_API_KEY = API_KEYS['soundcloud']['api_key']
 
 #Songkick API Keys
 SONGKICK_API_KEY = API_KEYS['songkick']['api_key']

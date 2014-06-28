@@ -1,4 +1,22 @@
 <div id='artist_feed_content'>
-  <h1><%= @artist.name %></h1>
+  <div id='artist_account_info'><%= @artist.name %></div>
+  <div id='artist_account_info_fake'></div>
+
+  <div id='feeds_content'>
+    <div id='songkick_feed_container'>
+      <%= image_tag 'https://ssl.sk-static.com/assets/nw/components/navigation/header-logo-726fadd.png', width: 280, height: 72 %>
+      <div class='feed'>
+        <% @artist.songkick_account.concerts.each do |concert| %>
+          <div class="single_feed">
+            <p><%= concert.event_name %> <%= concert.start_date %></p>
+            <p><%= "#{concert.city}, #{concert.state}" %> <%= ", #{concert.country}" if concert.country %></p>
+            <p>Age Restriction: <%= concert.age_restriction ? concert.age_restriction : "No Restriction Found" %></p>
+            <p>Venue Latitude: <%= concert.lat %></p>
+            <p>Venue Longitude: <%= concert.long %></p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
   
 </div>

@@ -1,17 +1,49 @@
-# require 'twitter_api'
-
 class Artist < ActiveRecord::Base
-
-  # include TwitterApi
+  has_one :twitter_account
+  # has_one :facebook_feed
+  # has_one :soundcloud_feed
+  has_one :songkick_account
+  has_and_belongs_to_many :users, :join_table => :users_artists
 
   validates :name, :music_genre, :presence => true
   validates :name, :uniqueness => {:scope => :music_genre}
 
-  has_one :twitter_account
-  # has_one :facebook_feed
-  # has_one :soundcloud_feed
-  # has_one :songkick_feed
-  has_and_belongs_to_many :users, :join_table => :users_artists
+
+  ####################################################################################################
+  ############################## UPDATE SONGKICK METHODS #############################################
+  ####################################################################################################
+
+  def self.update_all_songkick_accounts
+    Artist.all.each do |artist|
+      songkick_account = artist.songkick_account
+      unless artist.songkick_account.present?
+        songkick_id = artist.songkick_url.split('-')[0].split('/').last
+        songkick_account = SongkickAccount.create!(:songkick_id => songkick_id, :artist_id => artist.id, :display_name => artist.name)
+      end 
+
+      songkick_account.update_upcoming_concerts
+    end
+  end
+
+  def update_songkick_feed
+    songkick_account = self.songkick_account
+    unless songkick_account.present?
+      songkick_id = self.songkick_url.split('-')[0].split('/').last
+      songkick_account = SongkickAccount.create!(:songkick_id => songkick_id, :artist_id => self.id, :display_name => self.name)
+    end 
+
+    songkick_account.update_upcoming_concerts
+  end
+
+
+  ####################################################################################################
+  ############################## UPDATE SOUNDCLOUD METHODS ###########################################
+  ####################################################################################################
+
+  def update_soundcloud_feed
+    soundcloud_account = self.soundcloud_account
+  end
+
 
   def self.update_next_artist_feed
     artist = Artist.order(:updated_at).first
@@ -37,7 +69,15 @@ class Artist < ActiveRecord::Base
     # artist.create_songkick_account
   end
 
-  # def create_twitter_account
-  #   TwitterAccount.
-  # end
+  ########################## SUPER METHODS ###########################
+  ####################################################################
+
+  def self.extract_all_songkick_artist_ids
+    Artist.all.each do |artist|
+      unless artist.songkick_id
+        songkick_id = artist.songkick_url.split('-')[0].split('/').last
+        artist.update_attributes(:songkick_id => songkick_id)
+      end
+    end
+  end
 end
