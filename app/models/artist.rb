@@ -8,6 +8,11 @@ class Artist < ActiveRecord::Base
   validates :name, :music_genre, :presence => true
   validates :name, :uniqueness => {:scope => :music_genre}
 
+
+  ####################################################################################################
+  ############################## UPDATE SONGKICK METHODS #############################################
+  ####################################################################################################
+
   def self.update_all_songkick_accounts
     Artist.all.each do |artist|
       songkick_account = artist.songkick_account
@@ -29,6 +34,16 @@ class Artist < ActiveRecord::Base
 
     songkick_account.update_upcoming_concerts
   end
+
+
+  ####################################################################################################
+  ############################## UPDATE SOUNDCLOUD METHODS ###########################################
+  ####################################################################################################
+
+  def update_soundcloud_feed
+    soundcloud_account = self.soundcloud_account
+  end
+
 
   def self.update_next_artist_feed
     artist = Artist.order(:updated_at).first
