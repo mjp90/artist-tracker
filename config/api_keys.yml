@@ -1,0 +1,15 @@
+# Twitter API
+twitter:
+  api_key: GZ8k65DLA1hQX0fn8GRvnVg4r
+  api_secret: grCDB2Ed0eW5GIFVgDqJP3anpzY0cEOj3kYKUJk7JiyM9Baasx
+
+# Facebook API
+facebook:
+
+# Soundcloud API
+soundcloud: 
+  api_key: 854f20c74e55b29bf7f90dcdb88a4f04
+
+# Songkick API
+songkick:
+  api_key: z2WrpIAVrBRTbEiR

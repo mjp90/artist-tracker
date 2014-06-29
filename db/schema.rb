@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140626074644) do
+ActiveRecord::Schema.define(version: 20140628235036) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,6 +63,52 @@ ActiveRecord::Schema.define(version: 20140626074644) do
 
   add_index "songkick_accounts", ["artist_id"], name: "index_songkick_accounts_on_artist_id", unique: true, using: :btree
   add_index "songkick_accounts", ["user_id"], name: "index_songkick_accounts_on_user_id", unique: true, using: :btree
+
+  create_table "soundcloud_accounts", force: true do |t|
+    t.integer  "account_owner_id"
+    t.string   "account_owner_type"
+    t.integer  "soundcloud_id",      null: false
+    t.integer  "total_tracks"
+    t.integer  "total_followers"
+    t.integer  "total_following"
+    t.string   "display_name",       null: false
+    t.string   "country"
+    t.string   "city"
+    t.text     "api_url"
+    t.text     "url",                null: false
+    t.text     "avatar_url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "soundcloud_accounts", ["account_owner_id", "account_owner_type"], name: "soundcloud_accounts_on_account_owner_idx", unique: true, using: :btree
+
+  create_table "tracks", force: true do |t|
+    t.integer  "soundcloud_account_id"
+    t.integer  "soundcloud_id",         null: false
+    t.integer  "playback_count"
+    t.integer  "download_count"
+    t.integer  "comments_count"
+    t.integer  "favorited_count"
+    t.integer  "duration"
+    t.string   "genre"
+    t.text     "purchase_url"
+    t.text     "title",                 null: false
+    t.text     "url"
+    t.text     "artwork_url"
+    t.text     "waveform_url"
+    t.text     "stream_url"
+    t.text     "download_url"
+    t.text     "embedded_html"
+    t.datetime "uploaded_date",         null: false
+    t.boolean  "is_commentable",        null: false
+    t.boolean  "is_downloadable",       null: false
+    t.boolean  "is_streamable",         null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tracks", ["soundcloud_account_id"], name: "index_tracks_on_soundcloud_account_id", using: :btree
 
   create_table "twitter_accounts", force: true do |t|
     t.integer  "user_id"

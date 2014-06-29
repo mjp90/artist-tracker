@@ -6,6 +6,7 @@ class ArtistsController < ApplicationController
 
   def show
     @artist = current_user.artists.where(:id => params[:id]).take
+    head :not_found unless @artist
   end
 
   def show_twitter_feed

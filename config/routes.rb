@@ -27,6 +27,8 @@ Rails.application.routes.draw do
 
   post 'admin_manager/create_artist' => 'admin_manager#create_artist'
 
+  # mount Resque::Server, :at => '/resque'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

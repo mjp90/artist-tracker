@@ -1,9 +1,33 @@
+# == Schema Information
+#
+# Table name: artists
+#
+#  id             :integer          not null, primary key
+#  twitter_url    :text
+#  facebook_url   :text
+#  soundcloud_url :text
+#  songkick_url   :text
+#  name           :string(255)      not null
+#  music_genre    :string(255)      not null
+#  country        :string(255)
+#  city           :string(255)
+#  state          :string(255)
+#  age            :integer
+#  created_at     :datetime
+#  updated_at     :datetime
+#
+# Indexes
+#
+#  index_artists_on_name_and_music_genre  (name,music_genre) UNIQUE
+#
+
 class Artist < ActiveRecord::Base
   has_one :twitter_account
   # has_one :facebook_feed
-  # has_one :soundcloud_feed
-  has_one :songkick_account
+  has_one :soundcloud_account, :as => :account_owner, :dependent => :destroy
+  has_one :songkick_account, :dependent => :destroy
   has_and_belongs_to_many :users, :join_table => :users_artists
+  has_many :tracks, :through => :soundcloud_account
 
   validates :name, :music_genre, :presence => true
   validates :name, :uniqueness => {:scope => :music_genre}
@@ -42,6 +66,11 @@ class Artist < ActiveRecord::Base
 
   def update_soundcloud_feed
     soundcloud_account = self.soundcloud_account
+    unless soundcloud_account.present?
+      soundcloud_account = SoundcloudAccount.create_account_for_owner(self)
+    end
+
+    soundcloud_account.update_tracks
   end
 
 

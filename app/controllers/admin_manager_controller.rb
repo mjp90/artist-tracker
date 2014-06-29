@@ -25,7 +25,7 @@ class AdminManagerController < ApplicationController
     Artist.update_all_songkick_accounts
     
     SongkickAccount.update_all_accounts
-    SongkickApi.get_upcoming_concerts_for_user(u
+    # SongkickApi.get_upcoming_concerts_for_user
   end
 
   private

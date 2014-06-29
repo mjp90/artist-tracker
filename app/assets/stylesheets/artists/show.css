@@ -27,8 +27,17 @@
 }
 
 #songkick_feed_container {
+  float: left;
   background-color: #6B1212;
   width: 340px;
+  text-align: center;
+}
+
+#soundcloud_feed_container {
+  float: left;
+  margin-left: 50px;
+  background-color: #4B4B4B;
+  width: 440px;
   text-align: center;
 }
 

@@ -1,3 +1,22 @@
+# == Schema Information
+#
+# Table name: songkick_accounts
+#
+#  id             :integer          not null, primary key
+#  user_id        :integer
+#  artist_id      :integer
+#  songkick_id    :integer          not null
+#  total_concerts :integer
+#  display_name   :string(255)      not null
+#  created_at     :datetime
+#  updated_at     :datetime
+#
+# Indexes
+#
+#  index_songkick_accounts_on_artist_id  (artist_id) UNIQUE
+#  index_songkick_accounts_on_user_id    (user_id) UNIQUE
+#
+
 class SongkickAccount < ActiveRecord::Base
   has_many   :concerts
   belongs_to :user
