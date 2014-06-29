@@ -15,9 +15,9 @@
   <div id="artist_list_container">
     <div id="dashboard_h1">Artists</div>
     <div>
-      <%= link_to 'Create Artist!', dashboard_create_temp_artist_path %>
-      <% if @artists.any? %>
-        <%= link_to @artists.first.name, artist_path(@artists.first)%>
+      <%#= link_to 'Create Artist!', dashboard_create_temp_artist_path %>
+      <% @artists.each do |artist| %>
+        <%= link_to artist.name, artist_path(artist)%>
       <% end %>
       <h3><%= link_to 'Link Twitter Account', user_omniauth_authorize_path(:twitter) %></h3>
     </div>

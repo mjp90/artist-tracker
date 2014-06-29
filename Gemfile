@@ -28,11 +28,13 @@ gem 'rest-client', '~> 1.6.7'
 gem 'devise'
 gem 'omniauth-twitter'
 gem 'omniauth-facebook'
+gem 'soundcloud', '~> 0.3.2'
 
 gem 'font-awesome-rails'
 gem 'awesome_print', '~> 1.2.0'
 # Web Scraper
 gem 'mechanize'
+gem 'resque', '~> 1.25.2'
 
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0',          group: :doc
@@ -59,5 +61,6 @@ group :development do
   gem 'pry'
   gem 'pry-byebug', '~> 1.3.3'
   gem 'pry-doc'
+  gem 'annotate', '~> 2.6.5'
 end
 

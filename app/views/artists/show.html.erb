@@ -1,19 +1,53 @@
+<!--<script src="//connect.soundcloud.com/sdk.js"></script>-->
+
+<!-- <audio src="http://api.soundcloud.com/i1/tracks/137078163/streams?client_id=854f20c74e55b29bf7f90dcdb88a4f04" preload="auto"></audio> -->
+
 <div id='artist_feed_content'>
   <div id='artist_account_info'><%= @artist.name %></div>
   <div id='artist_account_info_fake'></div>
 
   <div id='feeds_content'>
+
     <div id='songkick_feed_container'>
       <%= image_tag 'https://ssl.sk-static.com/assets/nw/components/navigation/header-logo-726fadd.png', width: 280, height: 72 %>
       <div class='feed'>
-        <% @artist.songkick_account.concerts.each do |concert| %>
-          <div class="single_feed">
-            <p><%= concert.event_name %> <%= concert.start_date %></p>
-            <p><%= "#{concert.city}, #{concert.state}" %> <%= ", #{concert.country}" if concert.country %></p>
-            <p>Age Restriction: <%= concert.age_restriction ? concert.age_restriction : "No Restriction Found" %></p>
-            <p>Venue Latitude: <%= concert.lat %></p>
-            <p>Venue Longitude: <%= concert.long %></p>
-          </div>
+        <% if @artist.songkick_account %>
+          <% @artist.songkick_account.concerts.each do |concert| %>
+            <div class="single_feed">
+              <p><%= concert.event_name %> <%= concert.start_date %></p>
+              <p><%= "#{concert.city}, #{concert.state}" %> <%= ", #{concert.country}" if concert.country %></p>
+              <p>Age Restriction: <%= concert.age_restriction ? concert.age_restriction : "No Restriction Found" %></p>
+              <p>Venue Latitude: <%= concert.lat %></p>
+              <p>Venue Longitude: <%= concert.long %></p>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <div id='soundcloud_feed_container'>
+      <iframe allowtransparency="true" scrolling="no" frameborder="no" src="https://w.soundcloud.com/icon/?url=http%3A%2F%2Fsoundcloud.com%2Fmjp90&color=black_white&size=64" style="width: 64px; height: 64px;"></iframe>
+      <%#= image_tag 'http://w.soundcloud.com/icon/?url=http://soundcloud.com/mjp90&color=black_white&size=64', width: 64, height: 64 %>
+      <div class='feed'>
+        <% if @artist.soundcloud_account %>
+          <% @artist.soundcloud_account.tracks.limit(3).each do |track| %>
+            <div class="single_feed">
+              <%# if track.streamable %>
+
+              <%# else %>
+                <!-- Link to track because we cannot stream -->
+              <%# end %>
+              <p><%= track.stream_url %></p>
+
+              <% if track.embedded_html %>
+                <p><%= track.embedded_html.html_safe %></p>
+              <% else %>
+                <% track.get_embedded_html %>
+                <p><%= track.embedded_html.html_safe %></p>
+              <% end %>
+
+            </div>
+          <% end %>
         <% end %>
       </div>
     </div>

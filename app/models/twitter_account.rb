@@ -1,6 +1,30 @@
+# == Schema Information
+#
+# Table name: twitter_accounts
+#
+#  id              :integer          not null, primary key
+#  user_id         :integer
+#  artist_id       :integer
+#  statuses_count  :integer
+#  followers_count :integer
+#  username        :string(255)
+#  location        :string(255)
+#  language        :string(255)
+#  tagline         :text
+#  profile_pic_url :text
+#  join_date       :datetime
+#  created_at      :datetime
+#  updated_at      :datetime
+#
+# Indexes
+#
+#  twitter_accounts_artist_id_idx  (artist_id)
+#  twitter_accounts_user_id_idx    (user_id)
+#
+
 class TwitterAccount < ActiveRecord::Base
-  include TwitterApi
-  include ApiParamsExtractor
+  # include TwitterApi
+  # include ApiParamsExtractor
 
   belongs_to :user
   belongs_to :artist
