@@ -1,6 +1,5 @@
 
 class AdminManagerController < ApplicationController
-  # include TwitterApi
 
   def home
     @artist = Artist.new
@@ -11,8 +10,6 @@ class AdminManagerController < ApplicationController
   end
 
   def create_artist
-    # Artist.add_new(params[:info])
-    # binding.pry
     @artist = Artist.create(artist_params)
     if @artist.save
       flash[:notice] = "Artist Successfully Created" and redirect_to admin_manager_home_path
@@ -23,7 +20,6 @@ class AdminManagerController < ApplicationController
 
   def update_artist_songkick_accounts
     Artist.update_all_songkick_accounts
-    
     SongkickAccount.update_all_accounts
     # SongkickApi.get_upcoming_concerts_for_user
   end

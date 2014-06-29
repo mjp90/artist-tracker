@@ -11,10 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140628235036) do
+ActiveRecord::Schema.define(version: 20140629102523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "app_twitter_rate_limit_statuses", force: true do |t|
+    t.integer  "remaining_user_info_requests",     default: 180
+    t.integer  "remaining_user_timeline_requests", default: 180
+    t.integer  "remaining_rate_limit_requests",    default: 180
+    t.datetime "user_info_reset_time"
+    t.datetime "user_timeline_reset_time"
+    t.datetime "rate_limit_reset_time"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "artists", force: true do |t|
     t.text     "twitter_url"
@@ -110,23 +121,49 @@ ActiveRecord::Schema.define(version: 20140628235036) do
 
   add_index "tracks", ["soundcloud_account_id"], name: "index_tracks_on_soundcloud_account_id", using: :btree
 
+  create_table "tweets", force: true do |t|
+    t.integer  "twitter_account_id",     null: false
+    t.integer  "retweet_count"
+    t.integer  "favorites_count"
+    t.boolean  "is_retweet"
+    t.string   "twitter_id",             null: false
+    t.string   "retweet_hashtags",                    array: true
+    t.string   "retweet_user_mentions",               array: true
+    t.string   "hashtags",                            array: true
+    t.string   "user_mentions",                       array: true
+    t.text     "message"
+    t.text     "attachment_url"
+    t.text     "retweet_attachment_url"
+    t.datetime "tweeted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tweets", ["twitter_account_id"], name: "index_tweets_on_twitter_account_id", using: :btree
+
   create_table "twitter_accounts", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "artist_id"
+    t.integer  "account_owner_id"
+    t.string   "account_owner_type"
+    t.integer  "twitter_id",                   null: false
     t.integer  "statuses_count"
     t.integer  "followers_count"
-    t.string   "username"
+    t.integer  "friends_count"
+    t.integer  "favorites_count"
+    t.string   "username",                     null: false
     t.string   "location"
     t.string   "language"
+    t.string   "profile_background_color"
+    t.text     "profile_background_image_url"
+    t.text     "profile_banner_url"
     t.text     "tagline"
     t.text     "profile_pic_url"
+    t.boolean  "verified"
     t.datetime "join_date"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "twitter_accounts", ["artist_id"], name: "twitter_accounts_artist_id_idx", using: :btree
-  add_index "twitter_accounts", ["user_id"], name: "twitter_accounts_user_id_idx", using: :btree
+  add_index "twitter_accounts", ["account_owner_id", "account_owner_type"], name: "twitter_accounts_on_account_owner_idx", unique: true, using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

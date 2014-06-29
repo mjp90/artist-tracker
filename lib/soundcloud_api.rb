@@ -21,7 +21,12 @@ class SoundcloudApi
   end
 
   def self.get_embedded_audio_player(track)
-    client.get('/oembed', :url => track.url)['html']
+    begin
+      client.get('/oembed', :url => track.url)['html']
+    rescue Exception => e
+      binding.pry
+      raise e
+    end
   end
 
   def self.extract_account_info(response)
