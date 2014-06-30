@@ -12,7 +12,7 @@ class SongkickApi
 
     events.each do |event|
       event_info = self.extract_event_info(event)
-      upcoming_concerts.prepend(event_info)
+      upcoming_concerts << event_info
     end
 
     # Only handles a second page for now. Don't know if we'll need more
@@ -23,11 +23,11 @@ class SongkickApi
 
       events.each do |event|
         event_info = self.extract_event_info(event)
-        upcoming_concerts.prepend(event_info)
+        upcoming_concerts << event_info
       end
     end
 
-    songkick_account.update_column(:total_concerts, total_concerts)
+    songkick_account.update_attributes(:total_concerts => total_concerts)
     upcoming_concerts
   end
 

@@ -12,14 +12,18 @@
       <%= image_tag 'https://ssl.sk-static.com/assets/nw/components/navigation/header-logo-726fadd.png', width: 280, height: 72 %>
       <div class='feed'>
         <% if @artist.songkick_account %>
-          <% @artist.songkick_account.concerts.each do |concert| %>
-            <div class="single_feed">
-              <p><%= concert.event_name %> <%= concert.start_date %></p>
-              <p><%= "#{concert.city}, #{concert.state}" %> <%= ", #{concert.country}" if concert.country %></p>
-              <p>Age Restriction: <%= concert.age_restriction ? concert.age_restriction : "No Restriction Found" %></p>
-              <p>Venue Latitude: <%= concert.lat %></p>
-              <p>Venue Longitude: <%= concert.long %></p>
-            </div>
+          <% cache ['v1', @artist.songkick_account] do %>
+            <% @artist.songkick_account.concerts.each do |concert| %>
+              <% cache ['v1', concert] do %>
+                <div class="single_feed">
+                  <p><%= concert.event_name %> <%= concert.start_date %></p>
+                  <p><%= "#{concert.city}, #{concert.state}" %> <%= ", #{concert.country}" if concert.country %></p>
+                  <p>Age Restriction: <%= concert.age_restriction ? concert.age_restriction : "No Restriction Found" %></p>
+                  <p>Venue Latitude: <%= concert.lat %></p>
+                  <p>Venue Longitude: <%= concert.long %></p>
+                </div>
+              <% end %>
+            <% end %>
           <% end %>
         <% end %>
       </div>
@@ -30,27 +34,51 @@
       <%#= image_tag 'http://w.soundcloud.com/icon/?url=http://soundcloud.com/mjp90&color=black_white&size=64', width: 64, height: 64 %>
       <div class='feed'>
         <% if @artist.soundcloud_account %>
-          <% @artist.soundcloud_account.tracks.limit(3).each do |track| %>
-            <div class="single_feed">
-              <%# if track.streamable %>
+          <% cache ['v1', @artist.soundcloud_account] do %>
+            <% @artist.soundcloud_account.tracks.each do |track| %>
+              <% cache ['v1', track] do %>
+                <div class="single_feed">
+                  <%# if track.streamable %>
 
-              <%# else %>
-                <!-- Link to track because we cannot stream -->
-              <%# end %>
-              <p><%= track.stream_url %></p>
+                  <%# else %>
+                    <!-- Link to track because we cannot stream -->
+                  <%# end %>
+                  <p><%= @artist.soundcloud_account.display_name %></p>
+                  <p><%= track.stream_url %></p>
 
-              <% if track.embedded_html %>
-                <p><%= track.embedded_html.html_safe %></p>
-              <% else %>
-                <% track.get_embedded_html %>
-                <p><%= track.embedded_html.html_safe %></p>
+                  <% if track.embedded_html %>
+                    <p><%= track.embedded_html.html_safe %></p>
+                  <% else %>
+                    <%# track.get_embedded_html %>
+                    <p><%#= track.embedded_html.html_safe %><%= track.title %></p>
+                  <% end %>
+                </div>
               <% end %>
-
-            </div>
+            <% end %>
           <% end %>
         <% end %>
       </div>
     </div>
+
+    <div id='twitter_feed_container'>
+      <%= image_tag 'https://dev.twitter.com/sites/default/files/images_documentation/bird_blue_48.png', width: 48, height: 48 %>
+      <div class='feed'>
+        <% if @artist.twitter_account %>
+          <% cache ['v1', @artist.twitter_account] do %>
+            <% @artist.tweets.each do |tweet| %>
+              <% cache ['v1', tweet] do %>
+                <div class="single_feed">
+                  <p><%= tweet.message %></p>
+                </div>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+
+
   </div>
   
 </div>

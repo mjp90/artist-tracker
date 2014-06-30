@@ -32,10 +32,12 @@
 #
 
 class Track < ActiveRecord::Base
-  belongs_to :soundcloud_account
+  belongs_to :soundcloud_account, :touch => true
+
+  default_scope { order('id asc') }
 
   def get_embedded_html
     embedded_html = SoundcloudApi.get_embedded_audio_player(self)
-    self.update_column(:embedded_html, embedded_html)
+    self.update_attributes(:embedded_html => embedded_html)
   end
 end
