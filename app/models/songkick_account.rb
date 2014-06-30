@@ -2,42 +2,44 @@
 #
 # Table name: songkick_accounts
 #
-#  id             :integer          not null, primary key
-#  user_id        :integer
-#  artist_id      :integer
-#  songkick_id    :integer          not null
-#  total_concerts :integer
-#  display_name   :string(255)      not null
-#  created_at     :datetime
-#  updated_at     :datetime
+#  id                 :integer          not null, primary key
+#  account_owner_id   :integer
+#  account_owner_type :string(255)
+#  songkick_id        :integer          not null
+#  total_concerts     :integer
+#  display_name       :string(255)      not null
+#  created_at         :datetime
+#  updated_at         :datetime
 #
 # Indexes
 #
-#  index_songkick_accounts_on_artist_id  (artist_id) UNIQUE
-#  index_songkick_accounts_on_user_id    (user_id) UNIQUE
+#  songkick_accounts_on_account_owner_idx  (account_owner_id,account_owner_type) UNIQUE
 #
 
 class SongkickAccount < ActiveRecord::Base
-  has_many   :concerts
-  belongs_to :user
-  belongs_to :artist
+  belongs_to :account_owner, :polymorphic => true
+  has_many   :concerts, -> { order(:start_date) }
 
-  validates :user_id, :artist_id, :songkick_id, :uniqueness => true
+  validates :songkick_id, :uniqueness => true
   validates :songkick_id, :display_name, :presence => true
 
-  def update_upcoming_concerts
-    upcoming_concerts = SongkickApi.get_upcoming_concerts(self)
+  def update_concerts
+    found_concerts = SongkickApi.get_upcoming_concerts(self)
 
-    concert_ids = self.concerts.pluck(:songkick_id)
-    upcoming_concerts.each do |upcoming_concert|
-      found_songkick_id = upcoming_concert[:songkick_id]
-      concert           = Concert.where(:songkick_id => found_songkick_id).first
-      
-      concert ? concert.update_attributes(upcoming_concert) : self.concerts.create!(upcoming_concert)
-      concert_ids.delete(found_songkick_id)
+    existing_concert_ids = self.concerts.pluck(:songkick_id)
+    upcoming_concert_ids = found_concerts.map { |uc| uc[:songkick_id] }
+    new_concert_ids      = upcoming_concert_ids - existing_concert_ids
+    old_concert_ids      = existing_concert_ids - upcoming_concert_ids
+
+    if new_concert_ids.any?
+      new_concerts = found_concerts.last(new_concert_ids.count)
+      new_concerts.each do |new_concert|
+        self.concerts.create!(new_concert)
+      end
     end
 
-    # Remove any remaining Concerts. Songkick has removed them
-    Concert.where(:id => concert_ids).destroy_all
+    if old_concert_ids.any?
+      Concert.where(:songkick_id => old_concert_ids).destroy_all
+    end
   end
 end

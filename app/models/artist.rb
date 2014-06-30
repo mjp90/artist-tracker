@@ -22,15 +22,18 @@
 #
 
 class Artist < ActiveRecord::Base
-  has_one :twitter_account, :as => :account_owner, :dependent => :destroy
-  # has_one :facebook_feed
+  has_one :twitter_account,    :as => :account_owner, :dependent => :destroy
+  has_one :facebook_account,   :as => :account_owner, :dependent => :destroy
   has_one :soundcloud_account, :as => :account_owner, :dependent => :destroy
-  has_one :songkick_account, :dependent => :destroy
-  has_and_belongs_to_many :users, :join_table => :users_artists
-  has_many :tracks, :through => :soundcloud_account
-  has_many :tweets, :through => :twitter_account
+  has_one :songkick_account,   :as => :account_owner, :dependent => :destroy
+
+  has_many :tweets,   :through => :twitter_account
+  has_many :posts,    :through => :facebook_account
+  has_many :tracks,   :through => :soundcloud_account
   has_many :concerts, :through => :songkick_account
 
+  has_and_belongs_to_many :users, :join_table => :users_artists
+  
   validates :name, :music_genre, :presence => true
   validates :name, :uniqueness => {:scope => :music_genre}
 
@@ -55,10 +58,10 @@ class Artist < ActiveRecord::Base
     songkick_account = self.songkick_account
     unless songkick_account.present?
       songkick_id = self.songkick_url.split('-')[0].split('/').last
-      songkick_account = SongkickAccount.create!(:songkick_id => songkick_id, :artist_id => self.id, :display_name => self.name)
+      songkick_account = self.create_songkick_account(:songkick_id => songkick_id, :display_name => self.name)
     end 
 
-    songkick_account.update_upcoming_concerts
+    songkick_account.update_concerts
   end
 
 
@@ -87,6 +90,20 @@ class Artist < ActiveRecord::Base
     end
 
     twitter_account.update_tweets
+  end
+
+
+  ####################################################################################################
+  ############################## UPDATE FACEBOOK METHODS #############################################
+  ####################################################################################################
+
+  def update_facebook_feed
+    facebook_account = self.facebook_account
+    unless facebook_account.present?
+      facebook_account = FacebookAccount.create_account_for_owner(self)
+    end
+
+    facebook_account.update_posts
   end
 
 

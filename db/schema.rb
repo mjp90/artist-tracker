@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140629102523) do
+ActiveRecord::Schema.define(version: 20140630021103) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,10 @@ ActiveRecord::Schema.define(version: 20140629102523) do
     t.datetime "rate_limit_reset_time"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "artist_tracker_keys", force: true do |t|
+    t.string "facebook_access_token"
   end
 
   create_table "artists", force: true do |t|
@@ -62,18 +66,47 @@ ActiveRecord::Schema.define(version: 20140629102523) do
 
   add_index "concerts", ["songkick_account_id"], name: "index_concerts_on_songkick_account_id", using: :btree
 
-  create_table "songkick_accounts", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "artist_id"
-    t.integer  "songkick_id",    null: false
-    t.integer  "total_concerts"
-    t.string   "display_name",   null: false
+  create_table "facebook_accounts", force: true do |t|
+    t.integer  "account_owner_id"
+    t.string   "account_owner_type"
+    t.integer  "likes_count"
+    t.string   "facebook_id",        null: false
+    t.string   "about_info"
+    t.string   "hometown"
+    t.string   "genre"
+    t.text     "bio"
+    t.text     "banner_image_url"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "songkick_accounts", ["artist_id"], name: "index_songkick_accounts_on_artist_id", unique: true, using: :btree
-  add_index "songkick_accounts", ["user_id"], name: "index_songkick_accounts_on_user_id", unique: true, using: :btree
+  add_index "facebook_accounts", ["account_owner_id", "account_owner_type"], name: "facebook_accounts_on_account_owner_idx", unique: true, using: :btree
+
+  create_table "posts", force: true do |t|
+    t.integer  "facebook_account_id", null: false
+    t.integer  "shares_count"
+    t.integer  "likes_count"
+    t.integer  "comments_count"
+    t.string   "facebook_id",         null: false
+    t.text     "message"
+    t.datetime "posted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "posts", ["facebook_account_id"], name: "index_posts_on_facebook_account_id", using: :btree
+
+  create_table "songkick_accounts", force: true do |t|
+    t.integer  "account_owner_id"
+    t.string   "account_owner_type"
+    t.integer  "songkick_id",        null: false
+    t.integer  "total_concerts"
+    t.string   "display_name",       null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "songkick_accounts", ["account_owner_id", "account_owner_type"], name: "songkick_accounts_on_account_owner_idx", unique: true, using: :btree
 
   create_table "soundcloud_accounts", force: true do |t|
     t.integer  "account_owner_id"

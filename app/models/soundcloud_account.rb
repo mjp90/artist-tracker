@@ -34,7 +34,7 @@ class SoundcloudAccount < ActiveRecord::Base
 
   def update_tracks
     found_tracks_info = SoundcloudApi.get_tracks_for_account(self)
-    current_track_ids = self.tracks.pluck(:id)
+    current_track_ids = self.tracks.pluck(:soundcloud_id)
     found_track_ids   = found_tracks_info.map { |t| t[:soundcloud_id] }
 
     found_tracks_info.each do |track_info|

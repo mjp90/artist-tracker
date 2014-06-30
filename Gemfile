@@ -29,6 +29,7 @@ gem 'devise'
 gem 'omniauth-twitter'
 gem 'omniauth-facebook'
 gem 'soundcloud', '~> 0.3.2'
+gem "koala", "~> 1.10.0rc"
 
 gem 'font-awesome-rails'
 gem 'awesome_print', '~> 1.2.0'

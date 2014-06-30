@@ -3,82 +3,102 @@
 <!-- <audio src="http://api.soundcloud.com/i1/tracks/137078163/streams?client_id=854f20c74e55b29bf7f90dcdb88a4f04" preload="auto"></audio> -->
 
 <div id='artist_feed_content'>
-  <div id='artist_account_info'><%= @artist.name %></div>
-  <div id='artist_account_info_fake'></div>
+  <%# cache ['feed', @artist] do %>
+    <div id='artist_account_info'><%= @artist.name %></div>
+    <div id='artist_account_info_fake'></div>
 
-  <div id='feeds_content'>
+    <div id='feeds_content'>
 
-    <div id='songkick_feed_container'>
-      <%= image_tag 'https://ssl.sk-static.com/assets/nw/components/navigation/header-logo-726fadd.png', width: 280, height: 72 %>
-      <div class='feed'>
-        <% if @artist.songkick_account %>
-          <% cache ['v1', @artist.songkick_account] do %>
-            <% @artist.songkick_account.concerts.each do |concert| %>
-              <% cache ['v1', concert] do %>
-                <div class="single_feed">
-                  <p><%= concert.event_name %> <%= concert.start_date %></p>
-                  <p><%= "#{concert.city}, #{concert.state}" %> <%= ", #{concert.country}" if concert.country %></p>
-                  <p>Age Restriction: <%= concert.age_restriction ? concert.age_restriction : "No Restriction Found" %></p>
-                  <p>Venue Latitude: <%= concert.lat %></p>
-                  <p>Venue Longitude: <%= concert.long %></p>
-                </div>
+      <div id='songkick_feed_container'>
+        <%= image_tag 'https://ssl.sk-static.com/assets/nw/components/navigation/header-logo-726fadd.png', width: 280, height: 72 %>
+        <div class='feed'>
+          <% if @artist_songkick_account %>
+            <% cache ['feed', @artist_songkick_account] do %>
+              <p><%= @artist_songkick_account.total_concerts %></p>
+              <% @artist_songkick_account.concerts.each do |concert| %>
+                <% cache ['feed', concert] do %>
+                  <div class="single_feed">
+                    <p><%= concert.event_name %> <%= concert.start_date %></p>
+                    <p><%= "#{concert.city}, #{concert.state}" %> <%= ", #{concert.country}" if concert.country %></p>
+                    <p>Age Restriction: <%= concert.age_restriction ? concert.age_restriction : "No Restriction Found" %></p>
+                    <p>Venue Latitude: <%= concert.lat %></p>
+                    <p>Venue Longitude: <%= concert.long %></p>
+                  </div>
+                <% end %>
               <% end %>
             <% end %>
           <% end %>
-        <% end %>
+        </div>
       </div>
-    </div>
 
-    <div id='soundcloud_feed_container'>
-      <iframe allowtransparency="true" scrolling="no" frameborder="no" src="https://w.soundcloud.com/icon/?url=http%3A%2F%2Fsoundcloud.com%2Fmjp90&color=black_white&size=64" style="width: 64px; height: 64px;"></iframe>
-      <%#= image_tag 'http://w.soundcloud.com/icon/?url=http://soundcloud.com/mjp90&color=black_white&size=64', width: 64, height: 64 %>
-      <div class='feed'>
-        <% if @artist.soundcloud_account %>
-          <% cache ['v1', @artist.soundcloud_account] do %>
-            <% @artist.soundcloud_account.tracks.each do |track| %>
-              <% cache ['v1', track] do %>
-                <div class="single_feed">
-                  <%# if track.streamable %>
+      <div id='soundcloud_feed_container'>
+        <iframe allowtransparency="true" scrolling="no" frameborder="no" src="https://w.soundcloud.com/icon/?url=http%3A%2F%2Fsoundcloud.com%2Fmjp90&color=black_white&size=64" style="width: 64px; height: 64px;"></iframe>
+        <%#= image_tag 'http://w.soundcloud.com/icon/?url=http://soundcloud.com/mjp90&color=black_white&size=64', width: 64, height: 64 %>
+        <div class='feed'>
+          <% if @artist.soundcloud_account %>
+            <% cache ['v1', @artist.soundcloud_account] do %>
+              <% @artist.soundcloud_account.tracks.each do |track| %>
+                <% cache ['v1', track] do %>
+                  <div class="single_feed">
+                    <%# if track.streamable %>
 
-                  <%# else %>
-                    <!-- Link to track because we cannot stream -->
-                  <%# end %>
-                  <p><%= @artist.soundcloud_account.display_name %></p>
-                  <p><%= track.stream_url %></p>
+                    <%# else %>
+                      <!-- Link to track because we cannot stream -->
+                    <%# end %>
+                    <p><%= @artist.soundcloud_account.display_name %></p>
+                    <p><%= track.stream_url %></p>
 
-                  <% if track.embedded_html %>
-                    <p><%= track.embedded_html.html_safe %></p>
-                  <% else %>
-                    <%# track.get_embedded_html %>
-                    <p><%#= track.embedded_html.html_safe %><%= track.title %></p>
-                  <% end %>
-                </div>
+                    <% if track.embedded_html %>
+                      <p><%= track.embedded_html.html_safe %></p>
+                    <% else %>
+                      <%# track.get_embedded_html %>
+                      <p><%#= track.embedded_html.html_safe %><%= track.title %></p>
+                    <% end %>
+                  </div>
+                <% end %>
               <% end %>
             <% end %>
           <% end %>
-        <% end %>
+        </div>
       </div>
-    </div>
 
-    <div id='twitter_feed_container'>
-      <%= image_tag 'https://dev.twitter.com/sites/default/files/images_documentation/bird_blue_48.png', width: 48, height: 48 %>
-      <div class='feed'>
-        <% if @artist.twitter_account %>
-          <% cache ['v1', @artist.twitter_account] do %>
-            <% @artist.tweets.each do |tweet| %>
-              <% cache ['v1', tweet] do %>
-                <div class="single_feed">
-                  <p><%= tweet.message %></p>
-                </div>
+      <div id='twitter_feed_container'>
+        <%= image_tag 'https://dev.twitter.com/sites/default/files/images_documentation/bird_blue_48.png', width: 48, height: 48 %>
+        <div class='feed'>
+          <% if @artist.twitter_account %>
+            <% cache ['v1', @artist.twitter_account] do %>
+              <% @artist.tweets.each do |tweet| %>
+                <% cache ['v1', tweet] do %>
+                  <div class="single_feed">
+                    <p><%= tweet.message %></p>
+                  </div>
+                <% end %>
               <% end %>
             <% end %>
           <% end %>
-        <% end %>
+        </div>
       </div>
+
+      <div id='facebook_feed_container'>
+        <%= image_tag 'fb_logo.png', width: 72, height: 72 %>
+        <div class='feed'>
+          <% if @artist_facebook_account %>
+            <% cache ['feed', @artist_facebook_account] do %>
+              <p><%= @artist_facebook_account.likes_count %></p>
+              <% @artist_facebook_account.posts.each do |post| %>
+                <% cache ['feed', post] do %>
+                  <div class="single_feed">
+                    <p><%= post.message %></p>
+                    <p><%= post.likes_count %></p>
+                    <p><%= post.comments_count %></p>
+                  </div>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+
     </div>
-
-
-
-  </div>
-  
+  <%# end %>
 </div>

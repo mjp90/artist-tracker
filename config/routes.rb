@@ -17,6 +17,8 @@ Rails.application.routes.draw do
 
   get 'dashboard/index' => 'dashboard#index'
   get 'dashboard/show' => 'dashboard#show'
+  get 'dashboard/facebook_bench' => 'dashboard#facebook_bench'
+  get 'dashboard/songkick_bench' => 'dashboard#songkick_bench'
   get 'dashboard/create_temp_artist' => 'dashboard#create_temp_artist'
 
 
