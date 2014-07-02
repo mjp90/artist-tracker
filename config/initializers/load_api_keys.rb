@@ -5,7 +5,8 @@ TWITTER_API_KEY    = API_KEYS['twitter']['api_key']
 TWITTER_API_SECRET = API_KEYS['twitter']['api_secret']
 
 # Facebook API Keys
-
+FACEBOOK_API_KEY    = API_KEYS['facebook']['api_key']
+FACEBOOK_API_SECRET = API_KEYS['facebook']['api_secret']
 
 #Souncloud API Keys
 SOUNDCLOUD_API_KEY = API_KEYS['soundcloud']['api_key']

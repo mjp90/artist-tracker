@@ -49,6 +49,14 @@
   text-align: center;
 }
 
+#facebook_feed_container {
+  float: left;
+  margin-left: 50px;
+  background-color: #2A5A86;
+  width: 440px;
+  text-align: center;
+}
+
 .feed {
   
   /*margin-top: 20px;*/

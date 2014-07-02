@@ -5,6 +5,8 @@ twitter:
 
 # Facebook API
 facebook:
+  api_key: 261228314080063
+  api_secret: 1ef780d54dfa7f0e19236149a18e8db4
 
 # Soundcloud API
 soundcloud: 

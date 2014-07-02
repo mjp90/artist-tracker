@@ -15,19 +15,7 @@ class SongkickApi
       upcoming_concerts << event_info
     end
 
-    # Only handles a second page for now. Don't know if we'll need more
-    if total_concerts > page * RESULTS_PER_PAGE
-      results = self.request_results_for_account(songkick_account, page + 1)
-      page              = results["page"].to_i
-      events            = results["results"]["event"]
-
-      events.each do |event|
-        event_info = self.extract_event_info(event)
-        upcoming_concerts << event_info
-      end
-    end
-
-    songkick_account.update_attributes(:total_concerts => total_concerts)
+    songkick_account.update_attributes(:total_concerts => total_concerts) unless songkick_account.total_concerts == total_concerts
     upcoming_concerts
   end
 

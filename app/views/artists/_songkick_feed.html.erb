@@ -1,0 +1,9 @@
+<% cache ['feed', concert] do %>
+  <div class="single_feed">
+    <p><%= concert.event_name %> <%= concert.start_date %></p>
+    <p><%= "#{concert.city}, #{concert.state}" %> <%= ", #{concert.country}" if concert.country %></p>
+    <p>Age Restriction: <%= concert.age_restriction ? concert.age_restriction : "No Restriction Found" %></p>
+    <p>Venue Latitude: <%= concert.lat %></p>
+    <p>Venue Longitude: <%= concert.long %></p>
+  </div>
+<% end %>
