@@ -17,6 +17,7 @@ Rails.application.routes.draw do
 
   get 'dashboard/index' => 'dashboard#index'
   get 'dashboard/show' => 'dashboard#show'
+  get 'dashboard/twitter_bench' => 'dashboard#twitter_bench'
   get 'dashboard/facebook_bench' => 'dashboard#facebook_bench'
   get 'dashboard/songkick_bench' => 'dashboard#songkick_bench'
   get 'dashboard/create_temp_artist' => 'dashboard#create_temp_artist'
@@ -29,7 +30,7 @@ Rails.application.routes.draw do
 
   post 'admin_manager/create_artist' => 'admin_manager#create_artist'
 
-  # mount Resque::Server, :at => '/resque'
+  mount Resque::Server, :at => '/resque'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

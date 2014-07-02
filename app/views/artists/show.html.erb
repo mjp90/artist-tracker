@@ -65,10 +65,11 @@
       <div id='twitter_feed_container'>
         <%= image_tag 'https://dev.twitter.com/sites/default/files/images_documentation/bird_blue_48.png', width: 48, height: 48 %>
         <div class='feed'>
-          <% if @artist.twitter_account %>
-            <% cache ['v1', @artist.twitter_account] do %>
-              <% @artist.tweets.each do |tweet| %>
-                <% cache ['v1', tweet] do %>
+          <% if @artist_twitter_account %>
+            <% cache ['feed', @artist_twitter_account] do %>
+              <p><%= @artist_twitter_account.username %></p>
+              <% @artist_twitter_account.tweets.reverse_order.each do |tweet| %>
+                <% cache ['feed', tweet] do %>
                   <div class="single_feed">
                     <p><%= tweet.message %></p>
                   </div>
@@ -85,7 +86,7 @@
           <% if @artist_facebook_account %>
             <% cache ['feed', @artist_facebook_account] do %>
               <p><%= @artist_facebook_account.likes_count %></p>
-              <% @artist_facebook_account.posts.each do |post| %>
+              <% @artist_facebook_account.posts.reverse_order.each do |post| %>
                 <% cache ['feed', post] do %>
                   <div class="single_feed">
                     <p><%= post.message %></p>

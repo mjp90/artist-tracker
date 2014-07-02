@@ -24,6 +24,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'pg', '~> 0.17.1'
 
 gem 'rest-client', '~> 1.6.7'
+gem 'resque', '~> 1.25.2'
 
 gem 'devise'
 gem 'omniauth-twitter'
@@ -35,7 +36,6 @@ gem 'font-awesome-rails'
 gem 'awesome_print', '~> 1.2.0'
 # Web Scraper
 gem 'mechanize'
-gem 'resque', '~> 1.25.2'
 
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0',          group: :doc

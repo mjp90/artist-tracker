@@ -9,18 +9,14 @@ class TwitterApi
     end
   end
 
-  # Returns a Twitter::User object
   def self.get_account_info_for_owner(owner)
-    if AppTwitterRateLimitStatus.user_account_requests_exceeded?
-      head :forbidden and return
-    end
     username = owner.twitter_url
     username.slice!(/.*com\//)
     
     begin
-      response = client.user(username)
+      response     = client.user(username) #Can Raise Twitter::Error::TooManyRequests
     rescue Twitter::Error::TooManyRequests => e
-      raise e
+      check_rate_limit
     end
 
     account_info = self.extract_account_info(response)
@@ -30,21 +26,17 @@ class TwitterApi
   end
 
   def self.tweets_for_account(account, options=nil)
-    if AppTwitterRateLimitStatus.user_timeline_requests_exceeded?
-      head :forbidden and return
-    end
-    # options[:max_id] => min_id if min_id
-    options  ||= {:count => 100, :exclude_replies => true}
-
+    options ||= {:count => 150, :exclude_replies => true}
     begin
       response = client.user_timeline(account.twitter_id, options)
     rescue Twitter::Error::TooManyRequests => e
-      raise e
+      check_rate_limit
+      raise "Request Limit Hit"
     end
 
     tweets   = []
     response.each do |tweet|
-      tweets << self.extract_tweet_info(tweet)
+      tweets.prepend(self.extract_tweet_info(tweet))
     end
 
     tweets
@@ -65,7 +57,7 @@ class TwitterApi
     application_rate_limit[:rate_limit_reset_time]          = Time.at(application_methods[:"/application/rate_limit_status"][:reset])
 
     user_show.merge!(status_user_timeline).merge!(application_rate_limit)
-    binding.pry
+
     app_rate_limit_status = AppTwitterRateLimitStatus.where(:id => 1).first
     app_rate_limit_status.present? ? app_rate_limit_status.update_attributes(user_show) : AppTwitterRateLimitStatus.create(user_show)
   end
