@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users, :controllers => {:omniauth_callbacks => 'omniauth_callbacks'}
+
+  mount Resque::Server, :at => '/resque'
+
   # match "/auth/:provider/callback" => "sessions#create"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -20,6 +23,7 @@ Rails.application.routes.draw do
   get 'dashboard/twitter_bench' => 'dashboard#twitter_bench'
   get 'dashboard/facebook_bench' => 'dashboard#facebook_bench'
   get 'dashboard/songkick_bench' => 'dashboard#songkick_bench'
+  get 'dashboard/test_tweet' => 'dashboard#test_tweet'
   get 'dashboard/create_temp_artist' => 'dashboard#create_temp_artist'
 
 
@@ -30,7 +34,7 @@ Rails.application.routes.draw do
 
   post 'admin_manager/create_artist' => 'admin_manager#create_artist'
 
-  mount Resque::Server, :at => '/resque'
+  get 'cron/update_tweets' => 'cron#update_tweets'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

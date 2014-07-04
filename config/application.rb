@@ -25,5 +25,9 @@ module Artisttracker
     # config.i18n.default_locale = :de
 
     config.assets.initialize_on_precompile=false
+
+    # Uncomment this config if you want to see logs for asset rendering.
+    # Logging of assets is turned off by default in development environment.
+    # config.quiet_assets = false
   end
 end

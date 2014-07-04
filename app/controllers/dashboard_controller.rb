@@ -26,6 +26,12 @@ class DashboardController < ApplicationController
     redirect_to dashboard_show_path
   end
 
+  def test_tweet
+    TwitterApi.tweet(current_user.twitter_account)
+
+    redirect_to dashboard_show_path
+  end
+
   def facebook_bench
     Artist.first.facebook_account.update_posts
     redirect_to dashboard_show_path

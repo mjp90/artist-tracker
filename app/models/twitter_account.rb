@@ -5,11 +5,13 @@
 #  id                           :integer          not null, primary key
 #  account_owner_id             :integer
 #  account_owner_type           :string(255)
-#  twitter_id                   :integer          not null
 #  statuses_count               :integer
 #  followers_count              :integer
 #  friends_count                :integer
 #  favorites_count              :integer
+#  twitter_id                   :string(255)      not null
+#  oauth_token                  :string(255)
+#  oauth_secret                 :string(255)
 #  username                     :string(255)      not null
 #  location                     :string(255)
 #  language                     :string(255)

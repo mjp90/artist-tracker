@@ -177,11 +177,13 @@ ActiveRecord::Schema.define(version: 20140630021103) do
   create_table "twitter_accounts", force: true do |t|
     t.integer  "account_owner_id"
     t.string   "account_owner_type"
-    t.integer  "twitter_id",                   null: false
     t.integer  "statuses_count"
     t.integer  "followers_count"
     t.integer  "friends_count"
     t.integer  "favorites_count"
+    t.string   "twitter_id",                   null: false
+    t.string   "oauth_token"
+    t.string   "oauth_secret"
     t.string   "username",                     null: false
     t.string   "location"
     t.string   "language"

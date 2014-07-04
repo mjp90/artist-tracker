@@ -42,13 +42,38 @@ class TwitterApi
     tweets
   end
 
+  def self.tweet(account)
+    client = Twitter::REST::Client.new do |config|
+      config.consumer_key    = TWITTER_API_KEY
+      config.consumer_secret = TWITTER_API_SECRET
+      config.access_token = account.oauth_token
+      config.access_token_secret = account.oauth_secret
+    end
+
+    client.update("Tearin it ^")
+
+    # Reply to a Tweet
+    # client.update("Test API Tweet!", :in_reply_to_status_id => )
+
+    # Retweet. Pass ID. :trim_user makes it so you don't get all the unecessary tweet data? NOT RATE LIMITED 
+    # client.retweet([id], :trim_user => true)
+
+    # Follow User. NOT RATE LIMITED 
+    # friendships/create => https://dev.twitter.com/docs/api/1.1/post/friendships/create
+    # friendships/destroy
+
+    # Favorite a Tweet. NOT RATE LIMITED 
+    # favorites/create => https://dev.twitter.com/docs/api/1.1/post/favorites/create
+  end
+
   def self.check_rate_limit
     response            = client.get('/1.1/application/rate_limit_status.json')[:body]
     user_methods        = response[:resources][:users]
     status_methods      = response[:resources][:statuses]
     application_methods = response[:resources][:application]
-    application_rate_limit, user_show, status_user_timeline = {}
+    application_rate_limit, user_show, status_user_timeline = {}, {}, {}
 
+    binding.pry
     user_show[:remaining_user_info_requests]                = user_methods[:"/users/show/:id"][:remaining]
     user_show[:user_info_reset_time]                        = Time.at(user_methods[:"/users/show/:id"][:reset])
     status_user_timeline[:remaining_user_timeline_requests] = status_methods[:"/statuses/user_timeline"][:remaining]
