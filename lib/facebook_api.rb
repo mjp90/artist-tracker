@@ -39,6 +39,13 @@ class FacebookApi
     posts
   end
 
+
+  # Comment on a Post: https://developers.facebook.com/docs/graph-api/reference/v2.0/comment
+  # Like a Post: https://developers.facebook.com/docs/graph-api/reference/v2.0/post
+  # Like Page: DONT THINK THIS ALLOWED:
+  # "https://developers.facebook.com/plugins/code?path=like-box&href=https%3A%2F%2Fwww.facebook.com%2FFacebookDevelopers&width&height&show_faces=true&header=true&stream=false&show_border=true&colorscheme=light"
+
+
   def self.extract_account_info(response)
     banner = response['cover']
     {

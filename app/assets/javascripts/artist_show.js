@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  playTrack();
+  // playTrack();
 });
 
 var playTrack = function() {
@@ -8,7 +8,6 @@ var playTrack = function() {
   });
 
   SC.stream("/tracks/137078163", function(sound) {
-    debugger;
     sound.play();
   });
 } 

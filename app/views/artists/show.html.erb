@@ -70,8 +70,35 @@
               <p><%= @artist_twitter_account.username %></p>
               <% @artist_twitter_account.tweets.reverse_order.each do |tweet| %>
                 <% cache ['feed', tweet] do %>
-                  <div class="single_feed">
+                  <div class="single_twitter_feed">
                     <p><%= tweet.message %></p>
+                    <table width="100%">
+                      <thead>
+                        <tr>
+                          <th>Retweets</th>
+                          <th>Favorites</th>
+                          <th>Retweet</th>
+                          <th>Favorite</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><%= tweet.retweet_count %></td>
+                          <td><%= tweet.favorites_count %></td>
+                          <td><%= link_to_if @user_twitter_account, (fa_icon 'reply'), retweet_artist_path(tweet), :method => 'post' %></td>
+                          <td><%= link_to_if @user_twitter_account, (fa_icon 'heart'), favorite_tweet_artist_path(tweet), :method => 'post' %></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <% if @user_twitter_account %>
+                      <%= form_tag reply_to_tweet_artist_path(tweet) do %>
+                        <div class="tweet_reply">
+                          <%= label_tag 'Reply' %>
+                          <%= text_area_tag 'message', nil, :size => '35X20' %>
+                          <%= submit_tag 'Tweet' %>
+                        </div>
+                      <% end %>
+                    <% end %>
                   </div>
                 <% end %>
               <% end %>

@@ -58,11 +58,31 @@
 }
 
 .feed {
-  
+  background-color: #dedede;
   /*margin-top: 20px;*/
 }
 
 .single_feed {
-  background-color: #dedede;
+  /*background-color: #dedede;*/
   padding: 10px 5px;
 }
+
+.single_twitter_feed {
+  padding: 10px 5px;
+  border: 1px solid #CACACA;
+  margin: 5px 5px 10px 5px;
+}
+
+.tweet_reply {
+  margin-top: 15px; 
+}
+
+
+
+
+
+
+
+
+
+

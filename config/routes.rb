@@ -13,6 +13,9 @@ Rails.application.routes.draw do
   resources :artists do
     member do
       get 'show_twitter_feed'
+      post 'retweet',        :as => :retweet
+      post 'favorite_tweet', :as => :favorite_tweet
+      post 'reply_to_tweet', :as => :reply_to_tweet
     end
   end
 

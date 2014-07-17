@@ -1,11 +1,11 @@
 class TwitterApi
 
-  def self.client
+  def self.client(access_token, access_token_secret)
     @client ||= Twitter::REST::Client.new do |config|
       config.consumer_key    = TWITTER_API_KEY
       config.consumer_secret = TWITTER_API_SECRET
-      config.access_token = "2556622700-25CiVZIdJJZCDWbxqZhq2AHjGx1a4W0axCoD7U7"
-      config.access_token_secret = "5flzwd9Xgc0HugEKqPx8KYhnNTCUQhQ7CtStaB9Ac0IP1"
+      config.access_token = access_token || "2556622700-25CiVZIdJJZCDWbxqZhq2AHjGx1a4W0axCoD7U7"
+      config.access_token_secret = access_token_secret || "5flzwd9Xgc0HugEKqPx8KYhnNTCUQhQ7CtStaB9Ac0IP1"
     end
   end
 
@@ -28,7 +28,7 @@ class TwitterApi
   def self.tweets_for_account(account, options=nil)
     options ||= {:count => 150, :exclude_replies => true}
     begin
-      response = client.user_timeline(account.twitter_id, options)
+      response = client.user_timeline(account.twitter_id.to_i, options)
     rescue Twitter::Error::TooManyRequests => e
       check_rate_limit
       raise "Request Limit Hit"
@@ -42,28 +42,41 @@ class TwitterApi
     tweets
   end
 
+
+  # Reply to a Tweet
+  # client.update("Test API Tweet!", :in_reply_to_status_id => )
+
+  # Retweet. Pass ID. :trim_user makes it so you don't get all the unecessary tweet data? NOT RATE LIMITED 
+  # client.retweet([id], :trim_user => true)
+
+  # Follow User. NOT RATE LIMITED 
+  # friendships/create => https://dev.twitter.com/docs/api/1.1/post/friendships/create
+  # friendships/destroy
+
+  # Favorite a Tweet. NOT RATE LIMITED 
+  # favorites/create :include_entities => false => https://dev.twitter.com/docs/api/1.1/post/favorites/create
+
+
   def self.tweet(account)
-    client = Twitter::REST::Client.new do |config|
-      config.consumer_key    = TWITTER_API_KEY
-      config.consumer_secret = TWITTER_API_SECRET
-      config.access_token = account.oauth_token
-      config.access_token_secret = account.oauth_secret
-    end
+    client(account.oauth_token, account.oauth_secret).update("Tearin it ^")
+  end
 
-    client.update("Tearin it ^")
+  def self.retweet(account, tweet)
+    client(account.oauth_token, account.oauth_secret).retweet(tweet.twitter_id, :trim_user => true)
+  end
 
-    # Reply to a Tweet
-    # client.update("Test API Tweet!", :in_reply_to_status_id => )
+  def self.favorite(account, tweet)
+    client(account.oauth_token, account.oauth_secret).favorite(tweet.twitter_id, :include_entities => false)
+  end
 
-    # Retweet. Pass ID. :trim_user makes it so you don't get all the unecessary tweet data? NOT RATE LIMITED 
-    # client.retweet([id], :trim_user => true)
+  # Message must contain "@username" repsonding to
+  # https://dev.twitter.com/docs/api/1/post/statuses/update
+  def self.reply(account, tweet, message)
+    client(account.oauth_token, account.oauth_secret).update(message, :in_reply_to_status_id => tweet.id, :trim_user => true)
+  end
 
-    # Follow User. NOT RATE LIMITED 
-    # friendships/create => https://dev.twitter.com/docs/api/1.1/post/friendships/create
-    # friendships/destroy
-
-    # Favorite a Tweet. NOT RATE LIMITED 
-    # favorites/create => https://dev.twitter.com/docs/api/1.1/post/favorites/create
+  def self.follow(account, artist)
+    client(account.oauth_token, account.oauth_secret).friendship_create(artist.twitter_id, :include_entities => false)
   end
 
   def self.check_rate_limit
