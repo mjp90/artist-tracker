@@ -27,9 +27,9 @@ class SongkickAccount < ActiveRecord::Base
     found_concerts = SongkickApi.get_upcoming_concerts(self)
 
     existing_concert_ids = self.concerts.pluck(:songkick_id)
-    upcoming_concert_ids = found_concerts.map { |uc| uc[:songkick_id] }
-    new_concert_ids      = upcoming_concert_ids - existing_concert_ids
-    old_concert_ids      = existing_concert_ids - upcoming_concert_ids
+    found_concert_ids    = found_concerts.map { |uc| uc[:songkick_id] }
+    new_concert_ids      = found_concert_ids - existing_concert_ids
+    old_concert_ids      = existing_concert_ids - found_concert_ids
 
     if new_concert_ids.any?
       new_concerts = found_concerts.last(new_concert_ids.count)

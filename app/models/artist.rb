@@ -42,18 +42,6 @@ class Artist < ActiveRecord::Base
   ############################## UPDATE SONGKICK METHODS #############################################
   ####################################################################################################
 
-  def self.update_all_songkick_accounts
-    Artist.all.each do |artist|
-      songkick_account = artist.songkick_account
-      unless artist.songkick_account.present?
-        songkick_id = artist.songkick_url.split('-')[0].split('/').last
-        songkick_account = SongkickAccount.create!(:songkick_id => songkick_id, :artist_id => artist.id, :display_name => artist.name)
-      end 
-
-      songkick_account.update_upcoming_concerts
-    end
-  end
-
   def update_songkick_feed
     songkick_account = self.songkick_account
     unless songkick_account.present?

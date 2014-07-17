@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.1.1'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.1'
+gem 'rails', '~> 4.1.4'
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3'
 # Use SCSS for stylesheets
@@ -24,18 +24,19 @@ gem 'jbuilder', '~> 2.0'
 gem 'pg', '~> 0.17.1'
 
 gem 'rest-client', '~> 1.6.7'
+gem 'resque', '~> 1.25.2'
 
 gem 'devise'
 gem 'omniauth-twitter'
 gem 'omniauth-facebook'
 gem 'soundcloud', '~> 0.3.2'
 gem "koala", "~> 1.10.0rc"
+gem 'twitter', '~> 5.9.0'
 
 gem 'font-awesome-rails'
 gem 'awesome_print', '~> 1.2.0'
 # Web Scraper
 gem 'mechanize'
-gem 'resque', '~> 1.25.2'
 
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0',          group: :doc
@@ -58,10 +59,10 @@ gem 'rails_12factor', group: :production
 # gem 'debugger', group: [:development, :test]
 
 group :development do
-  gem 'twitter', '~> 5.9.0'
   gem 'pry'
   gem 'pry-byebug', '~> 1.3.3'
   gem 'pry-doc'
   gem 'annotate', '~> 2.6.5'
+  gem 'quiet_assets', '~> 1.0.3'
 end
 

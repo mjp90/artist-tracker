@@ -22,7 +22,7 @@
 
 class FacebookAccount < ActiveRecord::Base
   belongs_to :account_owner, :polymorphic => true
-  has_many   :posts
+  has_many   :posts, :dependent => :delete_all
 
   def self.create_account_for_owner(owner)
     fetched_account_info = FacebookApi.get_account_info_for_owner(owner)
@@ -35,18 +35,23 @@ class FacebookAccount < ActiveRecord::Base
     existing_post_ids = self.posts.pluck(:facebook_id)
     found_post_ids    = found_posts.map { |t| t[:facebook_id] }
     new_post_ids      = found_post_ids - existing_post_ids
-    old_post_ids      = existing_post_ids - found_post_ids
-
+    deleted_post_ids  = existing_post_ids - found_post_ids
+    present_post_ids  = found_post_ids - new_post_ids
+    posts_to_update   = self.posts.where(:facebook_id => present_post_ids)
+    
     if new_post_ids.any?
-      new_posts = found_posts.last(new_post_ids.count)
+      new_posts = found_posts.pop(new_post_ids.count)
       new_posts.each do |new_posts|
         self.posts.create!(new_posts)
       end
     end
-
-    if old_post_ids.any?
-      Post.where(:facebook_id => old_post_ids).destroy_all
+    
+    posts_to_update.each do |post|
+      post.update_attributes(found_posts.shift)
     end
 
+    if deleted_post_ids.any?
+      self.posts.where(:facebook_id => deleted_post_ids).destroy_all
+    end
   end
 end

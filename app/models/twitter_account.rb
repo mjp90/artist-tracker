@@ -5,11 +5,13 @@
 #  id                           :integer          not null, primary key
 #  account_owner_id             :integer
 #  account_owner_type           :string(255)
-#  twitter_id                   :integer          not null
 #  statuses_count               :integer
 #  followers_count              :integer
 #  friends_count                :integer
 #  favorites_count              :integer
+#  twitter_id                   :string(255)      not null
+#  oauth_token                  :string(255)
+#  oauth_secret                 :string(255)
 #  username                     :string(255)      not null
 #  location                     :string(255)
 #  language                     :string(255)
@@ -39,20 +41,32 @@ class TwitterAccount < ActiveRecord::Base
   end
 
   def update_tweets
-    found_tweets_info = TwitterApi.tweets_for_account(self)
-    current_tweet_ids = self.tweets.pluck(:id)
-    found_tweet_ids   = found_tweets_info.map { |t| t[:twitter_id] }
-    binding.pry
-    found_tweets_info.each do |tweet_info|
-      if current_tweet_ids.include?(tweet_info[:twitter_id]) 
-        self.tweets.update_attributes(tweet_info)
-      else 
-        tweet = self.tweets.create!(tweet_info)
+    puts "update_tweets"
+    found_tweets = TwitterApi.tweets_for_account(self)
+
+    existing_tweet_ids = self.tweets.pluck(:twitter_id)
+    found_tweet_ids    = found_tweets.map { |t| t[:twitter_id] }
+    new_tweet_ids      = found_tweet_ids - existing_tweet_ids
+    deleted_tweet_ids  = existing_tweet_ids - found_tweet_ids
+    present_tweet_ids  = found_tweet_ids - new_tweet_ids
+    tweets_to_update   = self.tweets.where(:twitter_id => present_tweet_ids)
+
+    if new_tweet_ids.any?
+      new_tweets = found_tweets.pop(new_tweet_ids.count)
+      new_tweets.each do |new_tweets|
+        self.tweets.create!(new_tweets)
       end
     end
 
-    deleted_tweets = current_tweet_ids - found_tweet_ids    
-    self.tweets.where(:id => deleted_tweets).destroy_all if deleted_tweets.count > 0
+    tweets_to_update.each do |tweet|
+      tweet.update_attributes(found_tweets.shift)
+    end
+
+    if deleted_tweet_ids.any?
+      self.tweets.where(:twitter_id => deleted_tweet_ids).destroy_all
+    end
+
+    save! # Done with updating so need to update updated_at time
   end
 
   def self.find_for_oauth(auth)

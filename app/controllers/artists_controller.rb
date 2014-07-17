@@ -6,7 +6,7 @@ class ArtistsController < ApplicationController
 
   def show
     @artist = current_user.artists.where(:id => params[:id]).take
-    head :not_found unless @artist
+    head :not_found and return unless @artist
 
     @artist_twitter_account    = @artist.twitter_account
     @artist_facebook_account   = @artist.facebook_account
@@ -14,6 +14,8 @@ class ArtistsController < ApplicationController
     # binding.pry
     # @artist_songkick_account   = SongkickAccount.preload(:concerts).where(:account_owner => @artist).take
     @artist_songkick_account   = @artist.songkick_account
+
+    @user_twitter_account = current_user.twitter_account
   end
 
   def show_twitter_feed
@@ -30,5 +32,27 @@ class ArtistsController < ApplicationController
 
   def show_songkick_feed
     
+  end
+
+  def retweet
+    binding.pry
+    tweet = Tweet.find(params[:id])
+    TwitterApi.retweet(current_user.twitter_account, tweet)
+    flash[:notice] = "Retweeted"
+    redirect_to :back
+  end
+
+  def favorite_tweet
+    binding.pry
+    tweet = Tweet.find(params[:id])
+    TwitterApi.favorite(current_user.twitter_account, tweet)
+    redirect_to :back
+  end
+
+  def reply_to_tweet
+    binding.pry
+    tweet = Tweet.find(params[:id])
+    TwitterApi.reply(current_user.twitter_account, tweet, params[:message]+'@'+tweet.twitter_account.username)
+    redirect_to :back
   end
 end
