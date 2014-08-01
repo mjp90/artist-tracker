@@ -57,6 +57,13 @@
   text-align: center;
 }
 
+#youtube_feed_container {
+  float: left;
+  background-color: #6B1212;
+  width: 340px;
+  text-align: center;
+}
+
 .feed {
   background-color: #dedede;
   /*margin-top: 20px;*/

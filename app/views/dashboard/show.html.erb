@@ -1,5 +1,12 @@
 <!-- I can use reload, isFitWidth, Unbind and rebind when needed -->
 
+<div id="search_overlay" class="overlay_hidden">
+  <%= form_tag 'search' do %>
+    <%= text_field_tag 'q', nil, :class => 'large_search_text' %>
+    <%= submit_tag 'Search', :class => "search_submit" %>
+  <% end %>
+</div>
+
 <div id="top_nav_bar">
   <div id="circle_icon"></div> 
   <div class="search_bar">
@@ -23,6 +30,7 @@
         <%= link_to artist.name, artist_path(artist)%>
       <% end %>
       <h3><%= link_to 'Link Twitter Account', user_omniauth_authorize_path(:twitter) %></h3>
+      <h3><%= link_to 'Link Facebook Account', user_omniauth_authorize_path(:facebook) %></h3>
     </div>
     <div id="artist_blocks_container">
     <div class="artist_block t1">

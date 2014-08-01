@@ -232,7 +232,7 @@ Devise.setup do |config|
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
 
   config.omniauth :twitter, "GZ8k65DLA1hQX0fn8GRvnVg4r", "grCDB2Ed0eW5GIFVgDqJP3anpzY0cEOj3kYKUJk7JiyM9Baasx"
-  # config.omniauth :facebook, "KEY", "SECRET"
+  config.omniauth :facebook, FACEBOOK_API_KEY, FACEBOOK_API_SECRET
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

@@ -23,12 +23,16 @@ gem 'jbuilder', '~> 2.0'
 
 gem 'pg', '~> 0.17.1'
 
-gem 'rest-client', '~> 1.6.7'
+gem 'actionpack-page_caching', '~> 1.0.2'
+gem 'rails-observers', '~> 0.1.2'
 gem 'resque', '~> 1.25.2'
+
+gem 'rest-client', '~> 1.6.7'
 
 gem 'devise'
 gem 'omniauth-twitter'
 gem 'omniauth-facebook'
+gem 'google-api-client', '~> 0.7.1'
 gem 'soundcloud', '~> 0.3.2'
 gem "koala", "~> 1.10.0rc"
 gem 'twitter', '~> 5.9.0'

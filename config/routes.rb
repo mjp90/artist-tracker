@@ -39,6 +39,8 @@ Rails.application.routes.draw do
 
   get 'cron/update_tweets' => 'cron#update_tweets'
 
+  get 'oauth2/youtube' => 'oauth2#youtube'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
