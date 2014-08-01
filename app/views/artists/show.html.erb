@@ -1,13 +1,19 @@
 <!--<script src="//connect.soundcloud.com/sdk.js"></script>-->
 
 <!-- <audio src="http://api.soundcloud.com/i1/tracks/137078163/streams?client_id=854f20c74e55b29bf7f90dcdb88a4f04" preload="auto"></audio> -->
-
 <div id='artist_feed_content'>
   <%# cache ['feed', @artist] do %>
     <div id='artist_account_info'><%= @artist.name %></div>
     <div id='artist_account_info_fake'></div>
 
     <div id='feeds_content'>
+
+      <div id='youtube_feed_container'>
+        <div class="feed">
+          <iframe type='text/html' src='http://www.youtube.com/embed/iV7a073rfBk' width='260' height='200' frameborder='0' allowfullscreen='true'/>
+          </iframe>
+        </div>
+      </div>
 
       <div id='songkick_feed_container'>
         <%= image_tag 'https://ssl.sk-static.com/assets/nw/components/navigation/header-logo-726fadd.png', width: 280, height: 72 %>

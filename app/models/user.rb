@@ -56,4 +56,27 @@ class User < ActiveRecord::Base
 
     twitter_account.update_attributes(account_info)
   end
+
+  def create_or_update_facebook_oauth(omni_auth_request)
+    binding.pry
+    account_info = {:favorites_count => omni_auth_request.extra.raw_info.favourites_count,
+                    :followers_count => omni_auth_request.extra.raw_info.followers_count,
+                    :friends_count   => omni_auth_request.extra.raw_info.friends_count,
+                    :join_date       => omni_auth_request.extra.raw_info.created_at,
+                    :language        => omni_auth_request.extra.raw_info.lang,
+                    :location        => omni_auth_request.extra.raw_info.location,
+                    :oauth_secret    => omni_auth_request.credentials.secret,
+                    :oauth_token     => omni_auth_request.credentials.token,
+                    :twitter_id      => omni_auth_request.uid,
+                    :username        => omni_auth_request.extra.raw_info.screen_name
+    }
+
+    twitter_account = TwitterAccount.find_by(:twitter_id => omni_auth_request.uid)
+
+    unless twitter_account
+      twitter_account = self.build_twitter_account
+    end
+
+    twitter_account.update_attributes(account_info)
+  end
 end

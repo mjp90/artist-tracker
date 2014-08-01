@@ -2,6 +2,8 @@
 twitter:
   api_key: GZ8k65DLA1hQX0fn8GRvnVg4r
   api_secret: grCDB2Ed0eW5GIFVgDqJP3anpzY0cEOj3kYKUJk7JiyM9Baasx
+  api_access_token: 2556622700-25CiVZIdJJZCDWbxqZhq2AHjGx1a4W0axCoD7U7
+  api_access_token_secret: 5flzwd9Xgc0HugEKqPx8KYhnNTCUQhQ7CtStaB9Ac0IP1
 
 # Facebook API
 facebook:
@@ -15,3 +17,8 @@ soundcloud:
 # Songkick API
 songkick:
   api_key: z2WrpIAVrBRTbEiR
+
+youtube:
+  api_key: "966069733816-sigqe3mda06spkqce16bnoqbqc3v6r6c.apps.googleusercontent.com"
+  api_secret: "SlNQF0AJfnC36PxiB7Lucn0V"
+  code: "4/1F42GXyG74vwA0LZgsj99eKTPDlo.8geKhQ6Kt-kaEnp6UAPFm0EaBJ2YjgI"

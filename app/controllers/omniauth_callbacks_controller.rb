@@ -13,4 +13,12 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     # session['devise.twitter_uid'] = request.env['omniauth.auth']
   end
 
+  def facebook
+    omni_auth_request = request.env['omniauth.auth']
+    current_user.create_or_update_facebook_oauth(omni_auth_request)
+
+    flash[:notice] = "Successfully Authenticated With Facebook!"
+    redirect_to dashboard_show_path
+  end
+
 end

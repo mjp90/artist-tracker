@@ -1,6 +1,27 @@
 $(document).ready(function() {
   initMasonry();
   showArtistInfo();
+
+  $(document).keyup(function(evt) {
+    if (evt.keyCode == 27) {
+      var overlay = $("#search_overlay")[0];
+      $(overlay).removeClass('show_overlay');
+      $(overlay).addClass('overlay_hidden');
+      // overlay.style.visibility = "hidden";
+      $(".large_search_text").val('');
+    }
+  });
+
+  // Enter is 13
+  // Esc is 27
+  $(window).on('keypress', function (evt){
+    var overlay = $("#search_overlay")[0]
+    // overlay.style.visibility = "visible";
+    $(overlay).addClass('show_overlay');
+    $(overlay).removeClass('overlay_hidden');
+    var currVal = $(".large_search_text").val();
+    $(".large_search_text").val(currVal + String.fromCharCode(evt.keyCode));
+  });
 });
 
 var initMasonry = function() {

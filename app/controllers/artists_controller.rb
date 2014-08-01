@@ -35,7 +35,6 @@ class ArtistsController < ApplicationController
   end
 
   def retweet
-    binding.pry
     tweet = Tweet.find(params[:id])
     TwitterApi.retweet(current_user.twitter_account, tweet)
     flash[:notice] = "Retweeted"
@@ -43,14 +42,12 @@ class ArtistsController < ApplicationController
   end
 
   def favorite_tweet
-    binding.pry
     tweet = Tweet.find(params[:id])
     TwitterApi.favorite(current_user.twitter_account, tweet)
     redirect_to :back
   end
 
   def reply_to_tweet
-    binding.pry
     tweet = Tweet.find(params[:id])
     TwitterApi.reply(current_user.twitter_account, tweet, params[:message]+'@'+tweet.twitter_account.username)
     redirect_to :back
