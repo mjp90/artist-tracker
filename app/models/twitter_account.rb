@@ -53,8 +53,8 @@ class TwitterAccount < ActiveRecord::Base
 
     if new_tweet_ids.any?
       new_tweets = found_tweets.pop(new_tweet_ids.count)
-      new_tweets.each do |new_tweets|
-        self.tweets.create!(new_tweets)
+      new_tweets.each do |new_tweet|
+        self.tweets.create!(new_tweet)
       end
     end
 

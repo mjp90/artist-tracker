@@ -2,6 +2,20 @@ require 'google/api_client'
 require 'launchy'
 
 class YoutubeApi
+
+  def self.client
+    unless @client
+      @client = Google::APIClient.new
+      @client.discovered_api('youtube', 'v3')
+      @client.authorization.client_id = YOUTUBE_API_KEY
+      @client.authorization.client_secret = YOUTUBE_API_SECRET
+      @client.authorization.scope = 'https://www.googleapis.com/auth/youtube'
+      @client.authorization.redirect_uri = "http://localhost:3000/oauth2/youtube"
+    end
+
+    @client
+  end
+
   @client ||= begin
     client = Google::APIClient.new(application_name: 'xxx', application_version: '0.0.1')
     client.authorization.client_id = "966069733816-sigqe3mda06spkqce16bnoqbqc3v6r6c.apps.googleusercontent.com"

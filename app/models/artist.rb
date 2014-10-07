@@ -26,11 +26,13 @@ class Artist < ActiveRecord::Base
   has_one :facebook_account,   :as => :account_owner, :dependent => :destroy
   has_one :soundcloud_account, :as => :account_owner, :dependent => :destroy
   has_one :songkick_account,   :as => :account_owner, :dependent => :destroy
+  has_one :youtube_account,    :as => :account_owner, :dependent => :destroy
 
   has_many :tweets,   :through => :twitter_account
   has_many :posts,    :through => :facebook_account
   has_many :tracks,   :through => :soundcloud_account
   has_many :concerts, :through => :songkick_account
+  has_many :videos,   :through => :youtube_account
 
   has_and_belongs_to_many :users, :join_table => :users_artists
   
@@ -92,6 +94,20 @@ class Artist < ActiveRecord::Base
     end
 
     facebook_account.update_posts
+  end
+
+
+  ####################################################################################################
+  ############################## UPDATE YOUTUBE METHODS ##############################################
+  ####################################################################################################
+
+  def update_youtube_feed
+    youtube_account = self.youtube_account
+    unless youtube_account.present?
+      youtube_account = YoutubeAccount.create_account_for_owner(self)
+    end
+
+    youtube_account.update_videos
   end
 
 
