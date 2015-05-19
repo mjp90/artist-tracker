@@ -28,7 +28,6 @@ class DashboardController < ApplicationController
 
   def test_tweet
     TwitterApi.tweet(current_user.twitter_account)
-
     redirect_to dashboard_show_path
   end
 

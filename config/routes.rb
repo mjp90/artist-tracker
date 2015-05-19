@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  devise_for :users, :controllers => {:omniauth_callbacks => 'omniauth_callbacks'}
+  devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
 
-  mount Resque::Server, :at => '/resque'
+  mount Resque::Server, at: '/resque'
 
   # match "/auth/:provider/callback" => "sessions#create"
   # The priority is based upon order of creation: first created -> highest priority.
@@ -13,9 +13,9 @@ Rails.application.routes.draw do
   resources :artists do
     member do
       get 'show_twitter_feed'
-      post 'retweet',        :as => :retweet
-      post 'favorite_tweet', :as => :favorite_tweet
-      post 'reply_to_tweet', :as => :reply_to_tweet
+      post 'retweet',        as: :retweet
+      post 'favorite_tweet', as: :favorite_tweet
+      post 'reply_to_tweet', as: :reply_to_tweet
     end
   end
 

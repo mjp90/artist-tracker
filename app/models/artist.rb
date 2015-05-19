@@ -22,20 +22,20 @@
 #
 
 class Artist < ActiveRecord::Base
-  has_one :twitter_account,    :as => :account_owner, :dependent => :destroy
-  has_one :facebook_account,   :as => :account_owner, :dependent => :destroy
-  has_one :soundcloud_account, :as => :account_owner, :dependent => :destroy
-  has_one :songkick_account,   :as => :account_owner, :dependent => :destroy
+  has_one :twitter_account,    as: :account_owner, dependent: :destroy
+  has_one :facebook_account,   as: :account_owner, dependent: :destroy
+  has_one :soundcloud_account, as: :account_owner, dependent: :destroy
+  has_one :songkick_account,   as: :account_owner, dependent: :destroy
 
-  has_many :tweets,   :through => :twitter_account
-  has_many :posts,    :through => :facebook_account
-  has_many :tracks,   :through => :soundcloud_account
-  has_many :concerts, :through => :songkick_account
+  has_many :tweets,   through: :twitter_account
+  has_many :posts,    through: :facebook_account
+  has_many :tracks,   through: :soundcloud_account
+  has_many :concerts, through: :songkick_account
 
-  has_and_belongs_to_many :users, :join_table => :users_artists
+  has_and_belongs_to_many :users, join_table: :users_artists
   
-  validates :name, :music_genre, :presence => true
-  validates :name, :uniqueness => {:scope => :music_genre}
+  validates :name, :music_genre, presence: true
+  validates :name, uniqueness: { scope: :music_genre }
 
 
   ####################################################################################################

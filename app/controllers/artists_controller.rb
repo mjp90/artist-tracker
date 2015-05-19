@@ -11,11 +11,22 @@ class ArtistsController < ApplicationController
     @artist_twitter_account    = @artist.twitter_account
     @artist_facebook_account   = @artist.facebook_account
     @artist_soundcloud_account = @artist.soundcloud_account
-    # binding.pry
+
     # @artist_songkick_account   = SongkickAccount.preload(:concerts).where(:account_owner => @artist).take
     @artist_songkick_account   = @artist.songkick_account
 
     @user_twitter_account = current_user.twitter_account
+  end
+
+  def follow
+    artist = Artist.find(params[:artist_id])
+    current_user.follow(artist)
+
+    render json: { status: :ok, errors: [current_user.errors] }
+  end
+
+  def unfollow
+    
   end
 
   def show_twitter_feed

@@ -8,10 +8,10 @@
 #  favorites_count        :integer
 #  is_retweet             :boolean
 #  twitter_id             :string(255)      not null
-#  retweet_hashtags       :string(255)      is an Array
-#  retweet_user_mentions  :string(255)      is an Array
-#  hashtags               :string(255)      is an Array
-#  user_mentions          :string(255)      is an Array
+#  retweet_hashtags       :string           is an Array
+#  retweet_user_mentions  :string           is an Array
+#  hashtags               :string           is an Array
+#  user_mentions          :string           is an Array
 #  message                :text
 #  attachment_url         :text
 #  retweet_attachment_url :text
