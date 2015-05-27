@@ -10,8 +10,6 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'home#index'
 
-  get 'home/test_page' => 'home#test_page'
-
   resources :artists do
     member do
       get 'show_twitter_feed'
