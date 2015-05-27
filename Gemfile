@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
-ruby '2.1.1'
+ruby '2.2.0'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 4.1.4'
+gem 'rails', '~> 4.2.1'
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3'
 # Use SCSS for stylesheets
@@ -68,5 +68,14 @@ group :development do
   gem 'pry-doc'
   gem 'annotate', '~> 2.6.5'
   gem 'quiet_assets', '~> 1.0.3'
+end
+
+group :development, :test do
+  gem 'rspec-rails', '~> 3.2.1'
+  gem "rspec_api_documentation"
+end
+
+group :test do
+  gem "factory_girl_rails", "~> 4.0"
 end
 

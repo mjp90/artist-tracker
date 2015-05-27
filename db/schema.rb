@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140630021103) do
+ActiveRecord::Schema.define(version: 20150426012955) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "app_twitter_rate_limit_statuses", force: true do |t|
+  create_table "app_twitter_rate_limit_statuses", force: :cascade do |t|
     t.integer  "remaining_user_info_requests",     default: 180
     t.integer  "remaining_user_timeline_requests", default: 180
     t.integer  "remaining_rate_limit_requests",    default: 180
@@ -27,20 +27,20 @@ ActiveRecord::Schema.define(version: 20140630021103) do
     t.datetime "updated_at"
   end
 
-  create_table "artist_tracker_keys", force: true do |t|
-    t.string "facebook_access_token"
+  create_table "artist_tracker_keys", force: :cascade do |t|
+    t.string "facebook_access_token", limit: 255
   end
 
-  create_table "artists", force: true do |t|
+  create_table "artists", force: :cascade do |t|
     t.text     "twitter_url"
     t.text     "facebook_url"
     t.text     "soundcloud_url"
     t.text     "songkick_url"
-    t.string   "name",           null: false
-    t.string   "music_genre",    null: false
-    t.string   "country"
-    t.string   "city"
-    t.string   "state"
+    t.string   "name",           limit: 255, null: false
+    t.string   "music_genre",    limit: 255, null: false
+    t.string   "country",        limit: 255
+    t.string   "city",           limit: 255
+    t.string   "state",          limit: 255
     t.integer  "age"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -48,17 +48,17 @@ ActiveRecord::Schema.define(version: 20140630021103) do
 
   add_index "artists", ["name", "music_genre"], name: "index_artists_on_name_and_music_genre", unique: true, using: :btree
 
-  create_table "concerts", force: true do |t|
-    t.integer  "songkick_account_id", null: false
-    t.integer  "songkick_id",         null: false
+  create_table "concerts", force: :cascade do |t|
+    t.integer  "songkick_account_id",             null: false
+    t.integer  "songkick_id",                     null: false
     t.integer  "age_restriction"
     t.float    "lat"
     t.float    "long"
-    t.text     "event_name",          null: false
-    t.text     "url",                 null: false
-    t.string   "city",                null: false
-    t.string   "state"
-    t.string   "country",             null: false
+    t.text     "event_name",                      null: false
+    t.text     "url",                             null: false
+    t.string   "city",                limit: 255, null: false
+    t.string   "state",               limit: 255
+    t.string   "country",             limit: 255, null: false
     t.datetime "start_date"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -66,14 +66,14 @@ ActiveRecord::Schema.define(version: 20140630021103) do
 
   add_index "concerts", ["songkick_account_id"], name: "index_concerts_on_songkick_account_id", using: :btree
 
-  create_table "facebook_accounts", force: true do |t|
+  create_table "facebook_accounts", force: :cascade do |t|
     t.integer  "account_owner_id"
-    t.string   "account_owner_type"
+    t.string   "account_owner_type", limit: 255
     t.integer  "likes_count"
-    t.string   "facebook_id",        null: false
-    t.string   "about_info"
-    t.string   "hometown"
-    t.string   "genre"
+    t.string   "facebook_id",        limit: 255, null: false
+    t.string   "about_info",         limit: 255
+    t.string   "hometown",           limit: 255
+    t.string   "genre",              limit: 255
     t.text     "bio"
     t.text     "banner_image_url"
     t.datetime "created_at"
@@ -82,12 +82,12 @@ ActiveRecord::Schema.define(version: 20140630021103) do
 
   add_index "facebook_accounts", ["account_owner_id", "account_owner_type"], name: "facebook_accounts_on_account_owner_idx", unique: true, using: :btree
 
-  create_table "posts", force: true do |t|
-    t.integer  "facebook_account_id", null: false
+  create_table "posts", force: :cascade do |t|
+    t.integer  "facebook_account_id",             null: false
     t.integer  "shares_count"
     t.integer  "likes_count"
     t.integer  "comments_count"
-    t.string   "facebook_id",         null: false
+    t.string   "facebook_id",         limit: 255, null: false
     t.text     "message"
     t.datetime "posted_at"
     t.datetime "created_at"
@@ -96,30 +96,30 @@ ActiveRecord::Schema.define(version: 20140630021103) do
 
   add_index "posts", ["facebook_account_id"], name: "index_posts_on_facebook_account_id", using: :btree
 
-  create_table "songkick_accounts", force: true do |t|
+  create_table "songkick_accounts", force: :cascade do |t|
     t.integer  "account_owner_id"
-    t.string   "account_owner_type"
-    t.integer  "songkick_id",        null: false
+    t.string   "account_owner_type", limit: 255
+    t.integer  "songkick_id",                    null: false
     t.integer  "total_concerts"
-    t.string   "display_name",       null: false
+    t.string   "display_name",       limit: 255, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "songkick_accounts", ["account_owner_id", "account_owner_type"], name: "songkick_accounts_on_account_owner_idx", unique: true, using: :btree
 
-  create_table "soundcloud_accounts", force: true do |t|
+  create_table "soundcloud_accounts", force: :cascade do |t|
     t.integer  "account_owner_id"
-    t.string   "account_owner_type"
-    t.integer  "soundcloud_id",      null: false
+    t.string   "account_owner_type", limit: 255
+    t.integer  "soundcloud_id",                  null: false
     t.integer  "total_tracks"
     t.integer  "total_followers"
     t.integer  "total_following"
-    t.string   "display_name",       null: false
-    t.string   "country"
-    t.string   "city"
+    t.string   "display_name",       limit: 255, null: false
+    t.string   "country",            limit: 255
+    t.string   "city",               limit: 255
     t.text     "api_url"
-    t.text     "url",                null: false
+    t.text     "url",                            null: false
     t.text     "avatar_url"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -127,43 +127,43 @@ ActiveRecord::Schema.define(version: 20140630021103) do
 
   add_index "soundcloud_accounts", ["account_owner_id", "account_owner_type"], name: "soundcloud_accounts_on_account_owner_idx", unique: true, using: :btree
 
-  create_table "tracks", force: true do |t|
+  create_table "tracks", force: :cascade do |t|
     t.integer  "soundcloud_account_id"
-    t.integer  "soundcloud_id",         null: false
+    t.integer  "soundcloud_id",                     null: false
     t.integer  "playback_count"
     t.integer  "download_count"
     t.integer  "comments_count"
     t.integer  "favorited_count"
     t.integer  "duration"
-    t.string   "genre"
+    t.string   "genre",                 limit: 255
     t.text     "purchase_url"
-    t.text     "title",                 null: false
+    t.text     "title",                             null: false
     t.text     "url"
     t.text     "artwork_url"
     t.text     "waveform_url"
     t.text     "stream_url"
     t.text     "download_url"
     t.text     "embedded_html"
-    t.datetime "uploaded_date",         null: false
-    t.boolean  "is_commentable",        null: false
-    t.boolean  "is_downloadable",       null: false
-    t.boolean  "is_streamable",         null: false
+    t.datetime "uploaded_date",                     null: false
+    t.boolean  "is_commentable",                    null: false
+    t.boolean  "is_downloadable",                   null: false
+    t.boolean  "is_streamable",                     null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "tracks", ["soundcloud_account_id"], name: "index_tracks_on_soundcloud_account_id", using: :btree
 
-  create_table "tweets", force: true do |t|
-    t.integer  "twitter_account_id",     null: false
+  create_table "tweets", force: :cascade do |t|
+    t.integer  "twitter_account_id",                 null: false
     t.integer  "retweet_count"
     t.integer  "favorites_count"
     t.boolean  "is_retweet"
-    t.string   "twitter_id",             null: false
-    t.string   "retweet_hashtags",                    array: true
-    t.string   "retweet_user_mentions",               array: true
-    t.string   "hashtags",                            array: true
-    t.string   "user_mentions",                       array: true
+    t.string   "twitter_id",             limit: 255, null: false
+    t.string   "retweet_hashtags",                                array: true
+    t.string   "retweet_user_mentions",                           array: true
+    t.string   "hashtags",                                        array: true
+    t.string   "user_mentions",                                   array: true
     t.text     "message"
     t.text     "attachment_url"
     t.text     "retweet_attachment_url"
@@ -174,20 +174,20 @@ ActiveRecord::Schema.define(version: 20140630021103) do
 
   add_index "tweets", ["twitter_account_id"], name: "index_tweets_on_twitter_account_id", using: :btree
 
-  create_table "twitter_accounts", force: true do |t|
+  create_table "twitter_accounts", force: :cascade do |t|
     t.integer  "account_owner_id"
-    t.string   "account_owner_type"
+    t.string   "account_owner_type",           limit: 255
     t.integer  "statuses_count"
     t.integer  "followers_count"
     t.integer  "friends_count"
     t.integer  "favorites_count"
-    t.string   "twitter_id",                   null: false
-    t.string   "oauth_token"
-    t.string   "oauth_secret"
-    t.string   "username",                     null: false
-    t.string   "location"
-    t.string   "language"
-    t.string   "profile_background_color"
+    t.string   "twitter_id",                   limit: 255, null: false
+    t.string   "oauth_token",                  limit: 255
+    t.string   "oauth_secret",                 limit: 255
+    t.string   "username",                     limit: 255, null: false
+    t.string   "location",                     limit: 255
+    t.string   "language",                     limit: 255
+    t.string   "profile_background_color",     limit: 255
     t.text     "profile_background_image_url"
     t.text     "profile_banner_url"
     t.text     "tagline"
@@ -200,17 +200,17 @@ ActiveRecord::Schema.define(version: 20140630021103) do
 
   add_index "twitter_accounts", ["account_owner_id", "account_owner_type"], name: "twitter_accounts_on_account_owner_idx", unique: true, using: :btree
 
-  create_table "users", force: true do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
+  create_table "users", force: :cascade do |t|
+    t.string   "email",                  limit: 255, default: "", null: false
+    t.string   "encrypted_password",     limit: 255, default: "", null: false
+    t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",                      default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
+    t.string   "current_sign_in_ip",     limit: 255
+    t.string   "last_sign_in_ip",        limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -218,9 +218,11 @@ ActiveRecord::Schema.define(version: 20140630021103) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
-  create_table "users_artists", id: false, force: true do |t|
+  create_table "users_artists", id: false, force: :cascade do |t|
     t.integer "user_id"
     t.integer "artist_id"
   end
+
+  add_index "users_artists", ["user_id", "artist_id"], name: "index_users_artists_on_user_id_and_artist_id", unique: true, using: :btree
 
 end
