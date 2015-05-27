@@ -1,8 +1,9 @@
 class CronController < ApplicationController
-  def update_tweets
+  def refresh_artist_twitter_feeds
     logger.info "CRON - TWITTER"
-    twitter_account = Artist.first.twitter_account
-    TwitterJob.enqueue(twitter_account.id, :update_tweets)
+    Artist.all.each do |artist|
+      TwitterJob.enqueue(TwitterFeed, :refresh_for_artist, artist.id)
+    end
 
     head :ok
   end

@@ -2,7 +2,7 @@ class DashboardController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    redirect_to dashboard_show_path
+    @artists = current_user.artists
   end
 
   def show

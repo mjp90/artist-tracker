@@ -34,39 +34,19 @@ class TwitterAccount < ActiveRecord::Base
   belongs_to :account_owner, :polymorphic => true
   has_many   :tweets, :dependent => :destroy
 
-
   def self.create_account_for_owner(owner)
     fetched_account_info = TwitterApi.get_account_info_for_owner(owner)
     owner.create_twitter_account(fetched_account_info)
   end
 
-  def update_tweets
-    puts "update_tweets"
-    found_tweets = TwitterApi.tweets_for_account(self)
-
-    existing_tweet_ids = self.tweets.pluck(:twitter_id)
-    found_tweet_ids    = found_tweets.map { |t| t[:twitter_id] }
-    new_tweet_ids      = found_tweet_ids - existing_tweet_ids
-    deleted_tweet_ids  = existing_tweet_ids - found_tweet_ids
-    present_tweet_ids  = found_tweet_ids - new_tweet_ids
-    tweets_to_update   = self.tweets.where(:twitter_id => present_tweet_ids)
-
-    if new_tweet_ids.any?
-      new_tweets = found_tweets.pop(new_tweet_ids.count)
-      new_tweets.each do |new_tweets|
-        self.tweets.create!(new_tweets)
-      end
+  def update_tweets(tweets_response)
+    tweets_response.each do |tweet_response|
+      tweet = tweets.where(twitter_id: tweet_response[:twitter_id]).first_or_initialize
+      tweet.update(tweet_response)
     end
 
-    tweets_to_update.each do |tweet|
-      tweet.update_attributes(found_tweets.shift)
-    end
-
-    if deleted_tweet_ids.any?
-      self.tweets.where(:twitter_id => deleted_tweet_ids).destroy_all
-    end
-
-    save! # Done with updating so need to update updated_at time
+    deleted_tweets = tweets.where.not(twitter_id: tweets_response.map { |t| t[:twitter_id] })
+    deleted_tweets.destroy_all
   end
 
   def self.find_for_oauth(auth)
