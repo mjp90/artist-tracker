@@ -75,3 +75,7 @@ group :development, :test do
   gem "rspec_api_documentation"
 end
 
+group :test do
+  gem "factory_girl_rails", "~> 4.0"
+end
+
