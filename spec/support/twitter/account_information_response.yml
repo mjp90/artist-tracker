@@ -1,0 +1,7 @@
+---
+name: 'Twitter Man'
+status:
+  text: 'Twitter Status' 
+statuses_count: 5
+twitter_id: 1
+url: 'http://foo.com'

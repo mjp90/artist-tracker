@@ -9,7 +9,7 @@
 #  followers_count              :integer
 #  friends_count                :integer
 #  favorites_count              :integer
-#  twitter_id                   :string(255)      not null
+#  twitter_uid                  :text             not null
 #  oauth_token                  :string(255)
 #  oauth_secret                 :string(255)
 #  username                     :string(255)      not null
@@ -24,6 +24,12 @@
 #  join_date                    :datetime
 #  created_at                   :datetime
 #  updated_at                   :datetime
+#  display_name                 :text
+#  profile_link_color           :text
+#  profile_use_background_image :boolean
+#  status                       :text
+#  time_zone                    :text
+#  url                          :text
 #
 # Indexes
 #

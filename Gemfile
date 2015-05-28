@@ -63,9 +63,6 @@ gem 'rails_12factor', group: :production
 # gem 'debugger', group: [:development, :test]
 
 group :development do
-  gem 'pry'
-  gem 'pry-byebug', '~> 1.3.3'
-  gem 'pry-doc'
   gem 'annotate', '~> 2.6.5'
   gem 'quiet_assets', '~> 1.0.3'
 end
@@ -73,6 +70,9 @@ end
 group :development, :test do
   gem 'rspec-rails', '~> 3.2.1'
   gem "rspec_api_documentation"
+  gem 'pry'
+  gem 'pry-byebug', '~> 1.3.3'
+  gem 'pry-doc'
 end
 
 group :test do

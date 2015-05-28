@@ -18,6 +18,8 @@
 #  tweeted_at             :datetime
 #  created_at             :datetime
 #  updated_at             :datetime
+#  language               :text
+#  truncated              :boolean
 #
 # Indexes
 #

@@ -1,40 +1,41 @@
 module Feed
   class Twitter
-    def initialize(artist: artist)
-      
+    def initialize(artist:)
+      @artist = artist
+      @client = Apis::Twitter::Client::ApplicationClient.new
     end
 
-    def self.refresh_for_artist(artist_id)
-      artist = Artist.find(artist_id)
-
-
-      user_info = Apis::Twitter.new(uid: artist.twitter_uid).user_info
-      artist.twitter_account.update(user_info)
-
-      refresh_account(artist)
-      refresh_tweets(artist)
+    def refresh
+      update_account
+      update_tweets
     end
 
-    def self.refresh_account(artist)
-      user_info = Apis::Twitter.new(uid: artist.twitter_uid).user_info
+    private
+    attr_reader :artist, :client
 
-      artist.twitter_account.update(user_info)
+    def account
+      @account || artist.twitter_account
     end
 
-    def self.refresh_tweets(artist)
-      tweets = Apis::Twitter.new(uid: artist.twitter_uid).tweets
+    def update_account
+      formatted_account_info = Apis::Twitter::Response::AccountInformation.new(
+        response: client.account_info(uid: account.twitter_uid)
+      ).serialize
 
-      tweets.each do |tweet_info|
-        refresh_tweet(tweet_info)
+      account.update(formatted_account_info)
+    end
+
+    def update_tweets
+      formatted_tweet_collection = Apis::Twitter::Response::Tweets.new(
+        response: client.tweets(uid: account.twitter_uid)
+      ).serialize
+
+      formatted_tweet_collection.each do |formatted_tweet|
+        account.tweets.where(twitter_id: formatted_tweet[:twitter_uid]).first_or_create(formatted_tweet)
       end
 
-      artist.tweets.where.not(twitter_id: tweets.pluck[:twitter_id]).destroy_all
-    end
-
-    def self.refresh_tweet(tweet_info)
-      tweet = Tweet.where(twitter_id: tweet_info[:twitter_id]).first_or_create
-
-      tweet.update(tweet_info)
+      # Remove tweets that are no longer recent
+      account.tweets.where.not(twitter_id: formatted_tweet_collection.map(&:twitter_uid)).destroy_all
     end
   end
 end
