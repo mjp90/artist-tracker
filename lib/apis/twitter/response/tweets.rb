@@ -7,7 +7,7 @@ module Apis
 
       def serialize
         tweets_response.map do |tweet_response|          
-          Apis::Twitter::Response::Tweet.new(tweet_response: tweet_response).serialize
+          Apis::Twitter::Response::Tweet.new(response: tweet_response).serialize
         end
       end
 

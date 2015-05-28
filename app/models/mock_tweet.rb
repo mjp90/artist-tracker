@@ -1,5 +1,5 @@
 class MockTweet
-  def intialize(tweet_response:)
+  def initialize(tweet_response:)
     @tweet_response = tweet_response
   end
 

@@ -19,7 +19,7 @@ module Feed
 
     def update_account
       formatted_account_info = Apis::Twitter::Response::AccountInformation.new(
-        response: client.account_info(uid: account.twitter_uid)
+        response: client.account_info(uid: account.twitter_uid.to_i)
       ).serialize
 
       account.update(formatted_account_info)
@@ -27,7 +27,7 @@ module Feed
 
     def update_tweets
       formatted_tweet_collection = Apis::Twitter::Response::Tweets.new(
-        response: client.tweets(uid: account.twitter_uid)
+        tweets_response: client.tweets(uid: account.twitter_uid.to_i, options: nil)
       ).serialize
 
       formatted_tweet_collection.each do |formatted_tweet|

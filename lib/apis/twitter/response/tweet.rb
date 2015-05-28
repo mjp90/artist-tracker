@@ -33,7 +33,7 @@ module Apis
         end
       end
 
-      # private
+      private
       attr_reader :response, :mock_tweet
     end
   end

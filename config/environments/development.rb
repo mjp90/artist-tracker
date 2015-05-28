@@ -31,6 +31,8 @@ Rails.application.configure do
   #   domain => 'somedomain.com'
   # }
 
+  config.colorize_logging = true
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 

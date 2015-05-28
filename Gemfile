@@ -38,7 +38,7 @@ gem "koala", "~> 1.10.0rc"
 gem 'twitter', '~> 5.9.0'
 
 gem 'font-awesome-rails'
-gem 'awesome_print', '~> 1.2.0'
+
 # Web Scraper
 gem 'mechanize'
 
@@ -65,6 +65,7 @@ gem 'rails_12factor', group: :production
 group :development do
   gem 'annotate', '~> 2.6.5'
   gem 'quiet_assets', '~> 1.0.3'
+  gem 'awesome_print', '~> 1.2.0'
 end
 
 group :development, :test do
