@@ -4,11 +4,11 @@
 #
 #  id                  :integer          not null, primary key
 #  songkick_account_id :integer          not null
-#  songkick_id         :integer          not null
+#  songkick_uid        :integer          not null
 #  age_restriction     :integer
 #  lat                 :float
 #  long                :float
-#  event_name          :text             not null
+#  name                :text             not null
 #  url                 :text             not null
 #  city                :string(255)      not null
 #  state               :string(255)

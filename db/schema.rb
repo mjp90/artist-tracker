@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150818070306) do
+ActiveRecord::Schema.define(version: 20150818072322) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,11 +50,11 @@ ActiveRecord::Schema.define(version: 20150818070306) do
 
   create_table "concerts", force: :cascade do |t|
     t.integer  "songkick_account_id",             null: false
-    t.integer  "songkick_id",                     null: false
+    t.integer  "songkick_uid",                    null: false
     t.integer  "age_restriction"
     t.float    "lat"
     t.float    "long"
-    t.text     "event_name",                      null: false
+    t.text     "name",                            null: false
     t.text     "url",                             null: false
     t.string   "city",                limit: 255, null: false
     t.string   "state",               limit: 255
