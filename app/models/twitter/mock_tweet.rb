@@ -25,7 +25,7 @@ module Twitter
     end
 
     def message
-      tweet_response.text.encode("iso-8859-1", undef: :replace, replace: '')
+      tweet_response.text.encode('utf-8','iso-8859-3', undef: :replace, replace: '')
     end
 
     def retweet_attachment_url

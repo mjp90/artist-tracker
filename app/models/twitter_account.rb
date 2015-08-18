@@ -47,10 +47,10 @@ class TwitterAccount < ActiveRecord::Base
 
   def update_tweets(tweets_response)
     tweets_response.each do |tweet_response|
-      tweets.where(twitter_id: tweet_response.delete(:twitter_uid)).first_or_create(tweet_response)
+      tweets.where(twitter_uid: tweet_response[:twitter_uid]).first_or_create(tweet_response)
     end
 
-    Tweet.truncate_tweets(twitter_account: self, tweet_ids: tweet_response.map(&:twitter_uid))
+    Tweet.truncate_tweets(twitter_account: self, tweet_uids: tweets_response.map { |tr| tr[:twitter_uid] })
   end
 
   def self.find_for_oauth(auth)

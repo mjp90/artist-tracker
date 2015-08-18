@@ -7,7 +7,7 @@
 #  retweet_count          :integer
 #  favorites_count        :integer
 #  is_retweet             :boolean
-#  twitter_id             :string(255)      not null
+#  twitter_uid            :string(255)      not null
 #  retweet_hashtags       :string           is an Array
 #  retweet_user_mentions  :string           is an Array
 #  hashtags               :string           is an Array
@@ -32,7 +32,7 @@ class Tweet < ActiveRecord::Base
   default_scope { order('id asc') }
   scope :min_tweet, -> { min(:id) }
 
-  def self.truncate_tweets(twitter_account:, tweet_ids:)
-    twitter_account.tweets.where.not(twitter_id: tweet_ids).destroy_all
+  def self.truncate_tweets(twitter_account:, tweet_uids:)
+    twitter_account.tweets.where.not(twitter_uid: tweet_uids).destroy_all
   end
 end

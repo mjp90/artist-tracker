@@ -21,13 +21,13 @@ module Apis
         request
       end
 
-      def tweets(user_uid:, options: nil)
+      def tweets(identifier:, options: nil)
         options ||= { count: 100, exclude_replies: true }
         request = Request.new(
           client: client,
           request_name: :user_timeline,
           response_formatter: Twitter::Response::Tweets,
-          arg: user_uid,
+          arg: identifier,
           options: options
         )
         request.send

@@ -19,7 +19,6 @@ module Apis
 
       def send
         response = send_request
-        binding.pry
       rescue Twitter::Error::TooManyRequests => e
         @error = Twitter::RequestError.new(e)
       else

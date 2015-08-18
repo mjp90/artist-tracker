@@ -9,7 +9,6 @@ class TwitterFeed
   def refresh_account(twitter_account)
     request = TwitterRequest.new(twitter_account: twitter_account)
     request.refresh_artist_account
-    binding.pry
     request.refresh_artist_tweets
   end
 end

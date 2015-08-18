@@ -13,7 +13,6 @@ class TwitterRequest
 
   def refresh_artist_account
     request = client.account_information(identifier: twitter_identifier)
-    binding.pry
 
     if request.success?
       twitter_account.update!(request.formatted_response)
@@ -23,7 +22,7 @@ class TwitterRequest
   end
 
   def refresh_artist_tweets
-    request = client.tweets(user_uid: twitter_identifier)
+    request = client.tweets(identifier: twitter_identifier)
 
     if request.success?
       twitter_account.update_tweets(request.formatted_response)
