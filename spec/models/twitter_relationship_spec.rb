@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: twitter_relationships
+#
+#  id          :integer          not null, primary key
+#  follower_id :integer
+#  followed_id :integer
+#  created_at  :datetime
+#  updated_at  :datetime
+#
+# Indexes
+#
+#  index_twitter_relationships_on_followed_id                  (followed_id)
+#  index_twitter_relationships_on_follower_id                  (follower_id)
+#  index_twitter_relationships_on_follower_id_and_followed_id  (follower_id,followed_id) UNIQUE
+#
+
 require "rails_helper"
 
 RSpec.describe TwitterRelationship, type: :model do
