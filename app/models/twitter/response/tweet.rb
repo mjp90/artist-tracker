@@ -1,6 +1,6 @@
-module Apis
-  module Twitter
-    class Response::Tweet
+module Twitter
+  module Response
+    class Tweet
       def initialize(response:)
         @response   = response
         @mock_tweet = build_mock_tweet
@@ -9,7 +9,7 @@ module Apis
       def serialize
         {
           attachment_url:         mock_tweet.attachment_url,
-          favorites_count:        mock_tweet.favorite_count,
+          favorites_count:        mock_tweet.favorites_count,
           hashtags:               mock_tweet.hashtags,
           is_retweet:             mock_tweet.retweet?,
           language:               mock_tweet.language,
@@ -27,9 +27,9 @@ module Apis
 
       def build_mock_tweet
         if response.retweet?
-          MockRetweet.new(tweet_response: response)
+          ::MockRetweet.new(tweet_response: response)
         else
-          MockTweet.new(tweet_response: response)
+          ::MockTweet.new(tweet_response: response)
         end
       end
 

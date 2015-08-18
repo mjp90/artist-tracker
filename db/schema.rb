@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150527062923) do
+ActiveRecord::Schema.define(version: 20150531233750) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -207,6 +207,17 @@ ActiveRecord::Schema.define(version: 20150527062923) do
   end
 
   add_index "twitter_accounts", ["account_owner_id", "account_owner_type"], name: "twitter_accounts_on_account_owner_idx", unique: true, using: :btree
+
+  create_table "twitter_relationships", force: :cascade do |t|
+    t.integer  "follower_id"
+    t.integer  "followed_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "twitter_relationships", ["followed_id"], name: "index_twitter_relationships_on_followed_id", using: :btree
+  add_index "twitter_relationships", ["follower_id", "followed_id"], name: "index_twitter_relationships_on_follower_id_and_followed_id", unique: true, using: :btree
+  add_index "twitter_relationships", ["follower_id"], name: "index_twitter_relationships_on_follower_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false

@@ -37,8 +37,8 @@
 #
 
 class TwitterAccount < ActiveRecord::Base
-  belongs_to :account_owner, :polymorphic => true
-  has_many   :tweets, :dependent => :destroy
+  belongs_to :account_owner, polymorphic: true
+  has_many   :tweets, dependent: :destroy
 
   def self.create_account_for_owner(owner)
     fetched_account_info = TwitterApi.get_account_info_for_owner(owner)
@@ -62,5 +62,9 @@ class TwitterAccount < ActiveRecord::Base
       # ...
       # twitter_account.save!
     end
+  end
+
+  def user?
+    account_owner.is_a?(User)
   end
 end

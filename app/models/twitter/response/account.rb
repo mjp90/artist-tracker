@@ -1,6 +1,6 @@
-module Apis
-  module Twitter
-    class Response::AccountInformation
+module Twitter
+  module Response
+    class Account
       def initialize(response:)
         @response = response
       end

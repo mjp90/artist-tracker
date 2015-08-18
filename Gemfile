@@ -78,5 +78,7 @@ end
 
 group :test do
   gem "factory_girl_rails", "~> 4.0"
+  gem "shoulda-matchers", require: false
+  gem "database_cleaner", require: false
 end
 

@@ -1,13 +1,13 @@
-module Apis
-  module Twitter
-    class Response::Tweets
+module Twitter
+  module Response
+    class Tweets
       def initialize(tweets_response:)
         @tweets_response = tweets_response
       end
 
       def serialize
-        tweets_response.map do |tweet_response|          
-          Apis::Twitter::Response::Tweet.new(response: tweet_response).serialize
+        tweets_response.map do |tweet_response|
+          Response::Tweet.new(response: tweet_response).serialize
         end
       end
 

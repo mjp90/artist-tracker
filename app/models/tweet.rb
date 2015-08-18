@@ -31,5 +31,4 @@ class Tweet < ActiveRecord::Base
 
   default_scope { order('id asc') }
   scope :min_tweet, -> { min(:id) }
-
 end

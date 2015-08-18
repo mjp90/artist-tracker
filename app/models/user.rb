@@ -35,6 +35,9 @@ class User < ActiveRecord::Base
 
   has_and_belongs_to_many :artists, join_table: :users_artists, uniq: true
 
+  has_many :twitter_relationships, foreign_key: :follower_id, dependent: :destroy
+  has_many :following, through: :twitter_relationships, source: :followed
+
   def follow_artist(artist)
     artists << artist
     save
