@@ -5,11 +5,12 @@
 #  id                 :integer          not null, primary key
 #  account_owner_id   :integer
 #  account_owner_type :string(255)
-#  songkick_id        :integer          not null
+#  songkick_uid       :integer          not null
 #  total_concerts     :integer
 #  display_name       :string(255)      not null
 #  created_at         :datetime
 #  updated_at         :datetime
+#  touring_until      :date
 #
 # Indexes
 #

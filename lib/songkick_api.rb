@@ -52,5 +52,4 @@ class SongkickApi
   def self.calendar_url_for_artist_id(songkick_id, page=1)
     "http://api.songkick.com/api/3.0/artists/#{songkick_id}/calendar.json?apikey=#{SONGKICK_API_KEY}"
   end
-
 end
