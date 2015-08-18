@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150818064459) do
+ActiveRecord::Schema.define(version: 20150818070306) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -100,11 +100,11 @@ ActiveRecord::Schema.define(version: 20150818064459) do
     t.integer  "account_owner_id"
     t.string   "account_owner_type", limit: 255
     t.integer  "songkick_uid",                   null: false
-    t.integer  "total_concerts"
     t.string   "display_name",       limit: 255, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.date     "touring_until"
+    t.text     "url"
   end
 
   add_index "songkick_accounts", ["account_owner_id", "account_owner_type"], name: "songkick_accounts_on_account_owner_idx", unique: true, using: :btree
