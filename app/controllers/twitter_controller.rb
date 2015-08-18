@@ -3,7 +3,7 @@ class TwitterController < ApplicationController
     artist          = Artist.find_by(params[:artist_id])
     twitter_account = artist.twitter_account.new(username: params[:username])
     request         = TwitterRequest.new(twitter_account: twitter_account)
-    request.refresh_artist_account!
+    request.refresh_artist_account
 
     if request.success?
       head :ok
@@ -16,7 +16,7 @@ class TwitterController < ApplicationController
   def refresh_artist_account
     twitter_account = TwitterAccount.find_by(params[:twitter_account_id])
     request         = TwitterRequest.new(twitter_account: twitter_account)
-    request.refresh_artist_account!
+    request.refresh_artist_account
 
     if request.success?
       head :ok

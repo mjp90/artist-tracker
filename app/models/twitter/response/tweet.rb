@@ -27,9 +27,9 @@ module Twitter
 
       def build_mock_tweet
         if response.retweet?
-          ::MockRetweet.new(tweet_response: response)
+          MockRetweet.new(tweet_response: response)
         else
-          ::MockTweet.new(tweet_response: response)
+          MockTweet.new(tweet_response: response)
         end
       end
 

@@ -31,4 +31,8 @@ class Tweet < ActiveRecord::Base
 
   default_scope { order('id asc') }
   scope :min_tweet, -> { min(:id) }
+
+  def self.truncate_tweets(twitter_account:, tweet_ids:)
+    twitter_account.tweets.where.not(twitter_id: tweet_ids).destroy_all
+  end
 end

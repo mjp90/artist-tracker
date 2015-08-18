@@ -11,8 +11,9 @@ class TwitterRequest
     @error.nil?
   end
 
-  def refresh_artist_account!
+  def refresh_artist_account
     request = client.account_information(identifier: twitter_identifier)
+    binding.pry
 
     if request.success?
       twitter_account.update!(request.formatted_response)
@@ -26,9 +27,6 @@ class TwitterRequest
 
     if request.success?
       twitter_account.update_tweets(request.formatted_response)
-        twitter_account.tweets.where(twitter_id: response[:twitter_uid]).first_or_create(response)
-
-      account.tweets.where.not(twitter_id: request.formatted_response.map(&:twitter_uid)).destroy_all
     else
       @error = request.error
     end

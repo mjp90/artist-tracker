@@ -27,9 +27,10 @@ module Apis
           client: client,
           request_name: :user_timeline,
           response_formatter: Twitter::Response::Tweets,
-          arg: user_uid
+          arg: user_uid,
+          options: options
         )
-        request.send(options)
+        request.send
 
         request
       end
