@@ -38,7 +38,7 @@ gem "koala", "~> 1.10.0rc"
 gem 'twitter', '~> 5.9.0'
 
 gem 'font-awesome-rails'
-gem 'awesome_print', '~> 1.2.0'
+
 # Web Scraper
 gem 'mechanize'
 
@@ -63,19 +63,22 @@ gem 'rails_12factor', group: :production
 # gem 'debugger', group: [:development, :test]
 
 group :development do
-  gem 'pry'
-  gem 'pry-byebug', '~> 1.3.3'
-  gem 'pry-doc'
   gem 'annotate', '~> 2.6.5'
   gem 'quiet_assets', '~> 1.0.3'
+  gem 'awesome_print', '~> 1.2.0'
 end
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.2.1'
   gem "rspec_api_documentation"
+  gem 'pry'
+  gem 'pry-byebug', '~> 1.3.3'
+  gem 'pry-doc'
 end
 
 group :test do
   gem "factory_girl_rails", "~> 4.0"
+  gem "shoulda-matchers", require: false
+  gem "database_cleaner", require: false
 end
 

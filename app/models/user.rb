@@ -29,11 +29,14 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable#, :omniauth_providers => [:twitter]
 
   has_one :twitter_account, as: :account_owner, dependent: :destroy
-  # has_one :facebook_account
-  # has_one :soundcloud_account
-  has_one :songkick_account
+  has_one :facebook_account, as: :account_owner, dependent: :destroy
+  has_one :soundcloud_account, as: :account_owner, dependent: :destroy
+  has_one :songkick_account, as: :account_owner, dependent: :destroy
 
   has_and_belongs_to_many :artists, join_table: :users_artists, uniq: true
+
+  has_many :twitter_relationships, foreign_key: :follower_id, dependent: :destroy
+  has_many :following, through: :twitter_relationships, source: :followed
 
   def follow_artist(artist)
     artists << artist

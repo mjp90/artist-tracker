@@ -30,4 +30,23 @@ class AppTwitterRateLimitStatus < ActiveRecord::Base
   def self.rate_limit_status_requests_exceeded?
     rate_limit_status.remaining_rate_limit_requests <= 0
   end
+
+  def self.account_info_hit
+    check_account_info_reset
+
+    if rate_limit_status.remaining_user_info_requests == 180
+      rate_limit_status.user_info_reset_time = 15.minutes.from_now
+    end
+
+    rate_limit_status.decrement(:remaining_user_info_requests)
+  end
+
+  def self.check_account_info_reset
+    if rate_limit_status.user_info_reset_time <= Time.now
+      rate_limit_status.remaining_user_info_requests = 180
+    end
+  end
+
+  # response = client.get('/1.1/application/rate_limit_status.json')[:body]
+  # user_methods        = response[:resources][:users]
 end

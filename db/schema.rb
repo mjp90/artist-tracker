@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150426012955) do
+ActiveRecord::Schema.define(version: 20150531233750) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -170,6 +170,8 @@ ActiveRecord::Schema.define(version: 20150426012955) do
     t.datetime "tweeted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "language"
+    t.boolean  "truncated"
   end
 
   add_index "tweets", ["twitter_account_id"], name: "index_tweets_on_twitter_account_id", using: :btree
@@ -181,7 +183,7 @@ ActiveRecord::Schema.define(version: 20150426012955) do
     t.integer  "followers_count"
     t.integer  "friends_count"
     t.integer  "favorites_count"
-    t.string   "twitter_id",                   limit: 255, null: false
+    t.text     "twitter_uid",                              null: false
     t.string   "oauth_token",                  limit: 255
     t.string   "oauth_secret",                 limit: 255
     t.string   "username",                     limit: 255, null: false
@@ -196,9 +198,26 @@ ActiveRecord::Schema.define(version: 20150426012955) do
     t.datetime "join_date"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "display_name"
+    t.text     "profile_link_color"
+    t.boolean  "profile_use_background_image"
+    t.text     "status"
+    t.text     "time_zone"
+    t.text     "url"
   end
 
   add_index "twitter_accounts", ["account_owner_id", "account_owner_type"], name: "twitter_accounts_on_account_owner_idx", unique: true, using: :btree
+
+  create_table "twitter_relationships", force: :cascade do |t|
+    t.integer  "follower_id"
+    t.integer  "followed_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "twitter_relationships", ["followed_id"], name: "index_twitter_relationships_on_followed_id", using: :btree
+  add_index "twitter_relationships", ["follower_id", "followed_id"], name: "index_twitter_relationships_on_follower_id_and_followed_id", unique: true, using: :btree
+  add_index "twitter_relationships", ["follower_id"], name: "index_twitter_relationships_on_follower_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false

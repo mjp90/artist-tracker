@@ -18,6 +18,8 @@
 #  tweeted_at             :datetime
 #  created_at             :datetime
 #  updated_at             :datetime
+#  language               :text
+#  truncated              :boolean
 #
 # Indexes
 #
@@ -29,5 +31,4 @@ class Tweet < ActiveRecord::Base
 
   default_scope { order('id asc') }
   scope :min_tweet, -> { min(:id) }
-
 end

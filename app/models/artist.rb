@@ -32,8 +32,11 @@ class Artist < ActiveRecord::Base
   has_many :tracks,   through: :soundcloud_account
   has_many :concerts, through: :songkick_account
 
+  has_many :twitter_relationships, foreign_key: :followed_id, dependent: :destroy
+  has_many :followers, through: :twitter_relationships, source: :follower
+
   has_and_belongs_to_many :users, join_table: :users_artists
-  
+
   validates :name, :music_genre, presence: true
   validates :name, uniqueness: { scope: :music_genre }
 
@@ -47,7 +50,7 @@ class Artist < ActiveRecord::Base
     unless songkick_account.present?
       songkick_id = self.songkick_url.split('-')[0].split('/').last
       songkick_account = self.create_songkick_account(:songkick_id => songkick_id, :display_name => self.name)
-    end 
+    end
 
     songkick_account.update_concerts
   end
