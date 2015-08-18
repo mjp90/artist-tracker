@@ -12,7 +12,7 @@ class SongkickRequest
   end
 
   def refresh_artist_account
-    request = client.account_information(identifier: songkick_identifier)
+    request = client.account_information(identifier: songkick_account.display_name)
 
     if request.success?
       twitter_account.update!(request.formatted_response)
@@ -22,10 +22,10 @@ class SongkickRequest
   end
 
   def refresh_artist_concerts
-    request = client.tweets(identifier: twitter_identifier)
+    request = client.upcoming_concerts(identifier: songkick_account.songkick_uid)
 
     if request.success?
-      twitter_account.update_tweets(request.formatted_response)
+      songkick_account.update_concerts(request.formatted_response)
     else
       @error = request.error
     end
@@ -33,8 +33,4 @@ class SongkickRequest
 
   private
   attr_reader :songkick_account, :client
-
-  def songkick_identifier
-    songkick_account.songkick_id || songkick_account.display_name
-  end
 end

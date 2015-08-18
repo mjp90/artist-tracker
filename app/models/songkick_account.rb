@@ -18,29 +18,17 @@
 #
 
 class SongkickAccount < ActiveRecord::Base
-  belongs_to :account_owner, :polymorphic => true
+  belongs_to :account_owner, polymorphic: true
   has_many   :concerts, -> { order(:start_date) }
 
-  validates :songkick_id, :uniqueness => true
-  validates :songkick_id, :display_name, :presence => true
+  validates :songkick_id, uniqueness: true
+  validates :songkick_id, :display_name, presence: true
 
-  def update_concerts
-    found_concerts = SongkickApi.get_upcoming_concerts(self)
-
-    existing_concert_ids = self.concerts.pluck(:songkick_id)
-    found_concert_ids    = found_concerts.map { |uc| uc[:songkick_id] }
-    new_concert_ids      = found_concert_ids - existing_concert_ids
-    old_concert_ids      = existing_concert_ids - found_concert_ids
-
-    if new_concert_ids.any?
-      new_concerts = found_concerts.last(new_concert_ids.count)
-      new_concerts.each do |new_concert|
-        self.concerts.create!(new_concert)
-      end
+  def update_concerts(concerts_response)
+    concerts_response.each do |concert_response|
+      concerts.where(songkick_uid: concert_response[:songkick_uid]).first_or_create(concert_response)
     end
 
-    if old_concert_ids.any?
-      Concert.where(:songkick_id => old_concert_ids).destroy_all
-    end
+    Concert.truncate_concerts(songkick_account: self, songkick_uids: concerts_response.map { |cr| cr[:songkick_uid] })
   end
 end
