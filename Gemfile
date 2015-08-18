@@ -74,6 +74,7 @@ group :development, :test do
   gem 'pry'
   gem 'pry-byebug', '~> 1.3.3'
   gem 'pry-doc'
+  gem 'pry-rails', '~> 0.3.4'
 end
 
 group :test do

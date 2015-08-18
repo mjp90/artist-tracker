@@ -1,8 +1,8 @@
 module Twitter
   module Response
     class Tweets
-      def initialize(tweets_response:)
-        @tweets_response = tweets_response
+      def initialize(response:)
+        @tweets_response = response
       end
 
       def serialize

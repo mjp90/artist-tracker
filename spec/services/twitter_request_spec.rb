@@ -27,11 +27,11 @@ RSpec.describe TwitterRequest do
   end
 
   context "Artist Requests" do
-    describe "#refresh_artist_account!" do
+    describe "#refresh_artist_account" do
       it "fetches an artist's account information and updates the account" do
         allow_any_instance_of(Apis::TwitterApi::ApplicationClient).to receive(:account_information) { twitter_account_response }
 
-        twitter_request.refresh_artist_account!
+        twitter_request.refresh_artist_account
 
         expect(twitter_account.persisted?).to be true
         expect(twitter_account).to have_attributes(twitter_account_response.formatted_response)
@@ -88,7 +88,7 @@ RSpec.describe TwitterRequest do
     it "it returns a RequestError" do
       allow_any_instance_of(Apis::TwitterApi::ApplicationClient).to receive(:account_information) { twitter_error_response }
 
-      twitter_request.refresh_artist_account!
+      twitter_request.refresh_artist_account
 
       expect(twitter_request.error).to be_present
       expect(twitter_request.error.class).to be(Twitter::RequestError)

@@ -11,7 +11,7 @@ class TwitterRequest
     @error.nil?
   end
 
-  def refresh_artist_account!
+  def refresh_artist_account
     request = client.account_information(identifier: twitter_identifier)
 
     if request.success?
@@ -21,6 +21,15 @@ class TwitterRequest
     end
   end
 
+  def refresh_artist_tweets
+    request = client.tweets(identifier: twitter_identifier)
+
+    if request.success?
+      twitter_account.update_tweets(request.formatted_response)
+    else
+      @error = request.error
+    end
+  end
 
   def refresh_account!
     request = client.account_information
@@ -64,6 +73,6 @@ class TwitterRequest
   end
 
   def twitter_identifier
-    twitter_account.twitter_uid || twitter_account.username
+    twitter_account.twitter_uid.to_i || twitter_account.username
   end
 end

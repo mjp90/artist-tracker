@@ -37,8 +37,6 @@ Rails.application.routes.draw do
 
   post 'admin_manager/create_artist' => 'admin_manager#create_artist'
 
-  get 'cron/update_tweets' => 'cron#update_tweets'
-
   get 'oauth2/youtube' => 'oauth2#youtube'
 
   # Example of regular route:
