@@ -16,16 +16,16 @@ module Apis
         @error.nil?
       end
 
-      def send(options)
-        response = client.send(request_name, arg, options)
+      def send
+        response = client.send(request_name, arg)
       rescue Twitter::Error::TooManyRequests => e
         @error = Twitter::RequestError.new(e)
       else
         @formatted_response = response_formatter.new(response: response).serialize
       end
 
-      def send
-        response = client.send(request_name, arg)
+      def send(options)
+        response = client.send(request_name, arg, options)
       rescue Twitter::Error::TooManyRequests => e
         @error = Twitter::RequestError.new(e)
       else

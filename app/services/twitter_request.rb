@@ -21,6 +21,18 @@ class TwitterRequest
     end
   end
 
+  def refresh_artist_tweets
+    request = client.tweets(user_uid: twitter_identifier)
+
+    if request.success?
+      twitter_account.update_tweets(request.formatted_response)
+        twitter_account.tweets.where(twitter_id: response[:twitter_uid]).first_or_create(response)
+
+      account.tweets.where.not(twitter_id: request.formatted_response.map(&:twitter_uid)).destroy_all
+    else
+      @error = request.error
+    end
+  end
 
   def refresh_account!
     request = client.account_information
@@ -64,6 +76,6 @@ class TwitterRequest
   end
 
   def twitter_identifier
-    twitter_account.twitter_uid || twitter_account.username
+    twitter_account.twitter_uid.to_i || twitter_account.username
   end
 end
