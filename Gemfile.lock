@@ -370,7 +370,7 @@ DEPENDENCIES
   pry-doc
   pry-rails (~> 0.3.4)
   quiet_assets (~> 1.0.3)
-  rails (~> 4.2.1)
+  rails (~> 4.2.3)
   rails-observers (~> 0.1.2)
   rails_12factor
   resque (~> 1.25.2)
@@ -386,5 +386,8 @@ DEPENDENCIES
   twitter (~> 5.9.0)
   uglifier (>= 1.3.0)
 
+RUBY VERSION
+   ruby 2.2.3p173
+
 BUNDLED WITH
-   1.10.6
+   1.12.5
