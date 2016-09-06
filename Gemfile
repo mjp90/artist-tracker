@@ -36,7 +36,7 @@ gem 'google-api-client', '~> 0.7.1'
 gem 'soundcloud', '~> 0.3.2'
 gem "koala", "~> 1.10.0rc"
 gem 'twitter', '~> 5.9.0'
-
+gem 'puma'
 gem 'font-awesome-rails'
 
 # Web Scraper

@@ -37,3 +37,4 @@ tmp
 .yardoc
 _yardoc
 doc/
+database.yml
