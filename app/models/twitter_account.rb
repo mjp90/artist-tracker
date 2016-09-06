@@ -65,4 +65,8 @@ class TwitterAccount < ActiveRecord::Base
   def user?
     account_owner.is_a?(User)
   end
+
+  def artist?
+    account_owner.is_a?(Artist)
+  end
 end

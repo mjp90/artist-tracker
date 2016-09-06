@@ -1,9 +1,61 @@
 #artist_feed_content {
-  
+  margin-left: 70px;
 }
 
-#artist_account_info {
+#sidebar-nav {
   position: fixed;
+  width: 70px;
+  height: 100%;
+  background-color: #333333;
+  text-align: center;
+  color: #efefef;
+}
+
+.artist-sidebar-icon {
+  font-size: 18px;
+}
+
+.artist-sidebar-icon:hover {
+  color: #e6ca58;
+}
+
+#artist-banner {
+  width: 100%;
+  height: 100px;
+  font-family: "Goudy Old Style", Garamond, "Big Caslon", "Times New Roman", serif;
+}
+
+.artist-background-image {
+  width: 100%;
+  height: 200px;
+  /*float: left;*/
+}
+
+.artist-info {
+  /*margin-top: 50px;*/
+  margin-top: -150px;
+  margin-bottom: 50px;
+  text-align: center;
+  font-size: 30px;
+  /*float: left;*/
+}
+
+#left-feed-container {
+  margin-top: 50px;
+  margin-left: 50px;
+  width: 50%;
+}
+
+#left-feed-control {
+  font-size: 22px;
+}
+
+#left-feed-body {
+
+}
+
+#artist-account-info {
+  /*position: fixed;*/
   width: 100%;
   height: 100px;
   background-color: #D5D5D5;
@@ -81,7 +133,7 @@
 }
 
 .tweet_reply {
-  margin-top: 15px; 
+  margin-top: 15px;
 }
 
 

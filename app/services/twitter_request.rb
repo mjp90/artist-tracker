@@ -65,10 +65,10 @@ class TwitterRequest
   attr_reader :twitter_account, :client
 
   def build_client
-    if twitter_account.user?
-      Apis::TwitterApi::UserClient.new(access_token: twitter_account.oauth_token, access_token_secret: twitter_account.oauth_secret)
-    else
+    if twitter_account.nil? || twitter_account.artist?
       Apis::TwitterApi::ApplicationClient.new(access_token: TWITTER_API_ACCESS_TOKEN, access_token_secret: TWITTER_API_ACCESS_TOKEN_SECRET)
+    else
+      Apis::TwitterApi::UserClient.new(access_token: twitter_account.oauth_token, access_token_secret: twitter_account.oauth_secret)
     end
   end
 

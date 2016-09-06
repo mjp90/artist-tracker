@@ -1,138 +1,74 @@
 <!--<script src="//connect.soundcloud.com/sdk.js"></script>-->
 
 <!-- <audio src="http://api.soundcloud.com/i1/tracks/137078163/streams?client_id=854f20c74e55b29bf7f90dcdb88a4f04" preload="auto"></audio> -->
+<div id='sidebar-nav'>
+  <p>Menu</p>
+  <p class='artist-sidebar-icon'><%= fa_icon "bars" %></p>
+</div>
+
 <div id='artist_feed_content'>
-  <%# cache ['feed', @artist] do %>
-    <div id='artist_account_info'><%= @artist.name %></div>
-    <div id='artist_account_info_fake'></div>
-
-    <div id='feeds_content'>
-
-      <div id='youtube_feed_container'>
-        <div class="feed">
-          <iframe type='text/html' src='http://www.youtube.com/embed/iV7a073rfBk' width='260' height='200' frameborder='0' allowfullscreen='true'/>
-          </iframe>
-        </div>
-      </div>
-
-      <div id='songkick_feed_container'>
-        <%= image_tag 'https://ssl.sk-static.com/assets/nw/components/navigation/header-logo-726fadd.png', width: 280, height: 72 %>
-        <div class='feed'>
-          <% if @artist_songkick_account %>
-            <% cache ['feed', @artist_songkick_account] do %>
-              <p><%= @artist_songkick_account.total_concerts %></p>
-              <% @artist_songkick_account.concerts.each do |concert| %>
-                <% cache ['feed', concert] do %>
-                  <div class="single_feed">
-                    <p><%= concert.event_name %> <%= concert.start_date %></p>
-                    <p><%= "#{concert.city}, #{concert.state}" %> <%= ", #{concert.country}" if concert.country %></p>
-                    <p>Age Restriction: <%= concert.age_restriction ? concert.age_restriction : "No Restriction Found" %></p>
-                    <p>Venue Latitude: <%= concert.lat %></p>
-                    <p>Venue Longitude: <%= concert.long %></p>
-                  </div>
-                <% end %>
-              <% end %>
-            <% end %>
-          <% end %>
-        </div>
-      </div>
-
-      <div id='soundcloud_feed_container'>
-        <iframe allowtransparency="true" scrolling="no" frameborder="no" src="https://w.soundcloud.com/icon/?url=http%3A%2F%2Fsoundcloud.com%2Fmjp90&color=black_white&size=64" style="width: 64px; height: 64px;"></iframe>
-        <%#= image_tag 'http://w.soundcloud.com/icon/?url=http://soundcloud.com/mjp90&color=black_white&size=64', width: 64, height: 64 %>
-        <div class='feed'>
-          <% if @artist.soundcloud_account %>
-            <% cache ['v1', @artist.soundcloud_account] do %>
-              <% @artist.soundcloud_account.tracks.each do |track| %>
-                <% cache ['v1', track] do %>
-                  <div class="single_feed">
-                    <%# if track.streamable %>
-
-                    <%# else %>
-                      <!-- Link to track because we cannot stream -->
-                    <%# end %>
-                    <p><%= @artist.soundcloud_account.display_name %></p>
-                    <p><%= track.stream_url %></p>
-
-                    <% if track.embedded_html %>
-                      <p><%= track.embedded_html.html_safe %></p>
-                    <% else %>
-                      <%# track.get_embedded_html %>
-                      <p><%#= track.embedded_html.html_safe %><%= track.title %></p>
-                    <% end %>
-                  </div>
-                <% end %>
-              <% end %>
-            <% end %>
-          <% end %>
-        </div>
-      </div>
-
-      <div id='twitter_feed_container'>
-        <%= image_tag 'https://dev.twitter.com/sites/default/files/images_documentation/bird_blue_48.png', width: 48, height: 48 %>
-        <div class='feed'>
-          <% if @artist_twitter_account %>
-            <% cache ['feed', @artist_twitter_account] do %>
-              <p><%= @artist_twitter_account.username %></p>
-              <% @artist_twitter_account.tweets.reverse_order.each do |tweet| %>
-                <% cache ['feed', tweet] do %>
-                  <div class="single_twitter_feed">
-                    <p><%= tweet.message %></p>
-                    <table width="100%">
-                      <thead>
-                        <tr>
-                          <th>Retweets</th>
-                          <th>Favorites</th>
-                          <th>Retweet</th>
-                          <th>Favorite</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td><%= tweet.retweet_count %></td>
-                          <td><%= tweet.favorites_count %></td>
-                          <td><%= link_to_if @user_twitter_account, (fa_icon 'reply'), retweet_artist_path(tweet), :method => 'post' %></td>
-                          <td><%= link_to_if @user_twitter_account, (fa_icon 'heart'), favorite_tweet_artist_path(tweet), :method => 'post' %></td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <% if @user_twitter_account %>
-                      <%= form_tag reply_to_tweet_artist_path(tweet) do %>
-                        <div class="tweet_reply">
-                          <%= label_tag 'Reply' %>
-                          <%= text_area_tag 'message', nil, :size => '35X20' %>
-                          <%= submit_tag 'Tweet' %>
-                        </div>
-                      <% end %>
-                    <% end %>
-                  </div>
-                <% end %>
-              <% end %>
-            <% end %>
-          <% end %>
-        </div>
-      </div>
-
-      <div id='facebook_feed_container'>
-        <%= image_tag 'fb_logo.png', width: 72, height: 72 %>
-        <div class='feed'>
-          <% if @artist_facebook_account %>
-            <% cache ['feed', @artist_facebook_account] do %>
-              <p><%= @artist_facebook_account.likes_count %></p>
-              <% @artist_facebook_account.posts.reverse_order.each do |post| %>
-                <% cache ['feed', post] do %>
-                  <div class="single_feed">
-                    <p><%= post.message %></p>
-                    <p><%= post.likes_count %></p>
-                    <p><%= post.comments_count %></p>
-                  </div>
-                <% end %>
-              <% end %>
-            <% end %>
-          <% end %>
-        </div>
-      </div>
-
+  <div id='artist-banner'>
+    <div class='artist-background-image'>
+      <%= image_tag @artist.try(:twitter_account).try(:profile_background_image_url), width: "100%", height: "200px" %>
     </div>
-  <%# end %>
+    <div class='artist-info'>
+      <%= @artist.name %>
+    </div>
+  </div>
+
+  <div id='left-feed-container'>
+    <div id='left-feed-control'>
+      <div>
+        <%= fa_icon "arrow-left" %>
+      </div>
+      <div style='text-align: center;'>
+        <%= fa_icon "twitter" %>
+      </div>
+    </div>
+
+    <div id='left-feed-body'>
+      <%= image_tag 'twitter_logo.png', width: 48, height: 48 %>
+      <div class='feed'>
+        <% if @artist_twitter_account %>
+          <% cache ['feed', @artist_twitter_account] do %>
+            <p><%= @artist_twitter_account.username %></p>
+            <% @artist_twitter_account.tweets.reverse_order.each do |tweet| %>
+              <% cache ['feed', tweet] do %>
+                <div class="single_twitter_feed">
+                  <p><%= tweet.message %></p>
+                  <table width="100%">
+                    <thead>
+                      <tr>
+                        <th>Retweets</th>
+                        <th>Favorites</th>
+                        <th>Retweet</th>
+                        <th>Favorite</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><%= tweet.retweet_count %></td>
+                        <td><%= tweet.favorites_count %></td>
+                        <td><%= link_to_if @user_twitter_account, (fa_icon 'reply'), retweet_artist_path(tweet), :method => 'post' %></td>
+                        <td><%= link_to_if @user_twitter_account, (fa_icon 'heart'), favorite_tweet_artist_path(tweet), :method => 'post' %></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <% if @user_twitter_account %>
+                    <%= form_tag reply_to_tweet_artist_path(tweet) do %>
+                      <div class="tweet_reply">
+                        <%= label_tag 'Reply' %>
+                        <%= text_area_tag 'message', nil, :size => '35X20' %>
+                        <%= submit_tag 'Tweet' %>
+                      </div>
+                    <% end %>
+                  <% end %>
+                </div>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
